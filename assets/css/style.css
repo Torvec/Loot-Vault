@@ -1,44 +1,47 @@
 :root {
-    --priColor: ;
-    --secColor: ;
-    --accColor: ;
+  --priColor: ;
+  --secColor: ;
+  --accColor: ;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html {
-    font-size: 62.5%; /* 1rem = 10px */
-    scroll-behavior: smooth;
+  font-size: 62.5%; /* 1rem = 10px */
+  scroll-behavior: smooth;
 }
 
 body {
-    background-color: black;
-    color: white;
-    font-size: 1.5rem; /* 15px */
-    font-family: sans-serif;
+  background-color: black;
+  color: white;
+  font-size: 1.5rem; /* 15px */
+  font-family: sans-serif;
 }
 
 header {
-    width: 100%;
-    background-color: slategray;
+  width: 100%;
+  background-color: slategray;
 }
 
 main {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-    background-color: darkgray;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: darkgray;
 }
 
 footer {
-    width: 100%;
-    background-color: slategray;
+  width: 100%;
+  background-color: slategray;
 }
 
 .content {
-    display: flex;
-    justify-content: space-evenly;
+  display: flex;
+  justify-content: space-evenly;
 }
 
+.bd {
+  border: 1px solid red;
+}
