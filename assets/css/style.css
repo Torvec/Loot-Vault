@@ -16,7 +16,7 @@ html {
 }
 
 body {
-  background-color: black;
+  background-color: #393e46;
   color: white;
   font-size: 1.5rem; /* 15px */
   font-family: sans-serif;
@@ -24,7 +24,7 @@ body {
 
 header {
   width: 100%;
-  background-color: slategray;
+  background-color: #222831;
 }
 
 main {
@@ -36,7 +36,11 @@ main {
 
 footer {
   width: 100%;
-  background-color: slategray;
+  background-color: #222831;
+}
+
+footer h3 {
+  color: white;
 }
 
 .content {
