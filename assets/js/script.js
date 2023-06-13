@@ -21,3 +21,39 @@ const apiKey = 'cb7fd697d0f04be5879ce9e0eb0c1473';
   }
 
     fetchGames();
+
+ function fetchDiscounts() {
+  const gamesUrl = `https://www.cheapshark.com/api/1.0/deals?storeID=1&onSale=1&pageSize=10`;
+
+  fetch(gamesUrl)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      data.forEach((game) => {
+        const gameName = game.title;
+        const normalPrice = game.normalPrice;
+        const salePrice = game.salePrice;
+
+        console.log(gameName, normalPrice, salePrice);
+
+        // Log normalPrice and salePrice for each gam
+
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+fetchDiscounts();
+    
+
+function fetchHighestRated(){
+  const gamesUrl = `https://www.cheapshark.com/api/1.0/deals?storeID=1&onSale=1&pageSize=10`;
+
+  fetch(gamesUrl)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+    });
+}
