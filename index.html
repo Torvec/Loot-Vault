@@ -12,7 +12,6 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
     />
-    <link rel="stylesheet" href="./assets/css/normalize.css" />
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Loot Vault</title>
   </head>
@@ -21,8 +20,8 @@
       <h1>Loot Vault</h1>
       <div id="search-bar">
         <form>
-          <input type="text" placeholder="Search" />
-          <button type="submit" id="search-">Search</button>
+          <input id="searchInput" type="text" placeholder="Search" />
+          <button type="submit" id="search-button">Search</button>
         </form>
       </div>
       <nav class="navbar-">
@@ -38,7 +37,7 @@
       <div>
         <button id="best-deals">Best Deals</button>
         <button id="latest-deals">Latest Deals</button>
-        <button id="placeholder"></button>
+        <button id="highest-rated">Highest Rated</button>
       </div>
       <!-- container that holds game results content -->
       <div>
