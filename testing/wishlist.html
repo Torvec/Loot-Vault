@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: rgb(50, 50, 50);
+            color: rgb(255, 255, 255);
+            font-family: sans-serif;
+        }
+        header h1 {
+            text-align: center;
+        }
+        footer p {
+            text-align: center;
+        }
+    </style>
+    <title>Wishlist Testing</title>
+</head>
+<body>
+
+    <header>
+        <h1>Wishlist Testing</h1>
+    </header>
+    <main>
+        <!-- Generated content -->
+    </main>
+    <footer>
+        <p>This is only a test</p>
+    </footer>
+    <script>
+        
+        var savedWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        // console.log(wishlist);
+
+        var main = document.querySelector('main');
+        var gameList = document.createElement('div');
+        gameList.setAttribute('id', 'gameList');
+        main.appendChild(gameList);
+        var wishlist = document.createElement('div');
+        wishlist.setAttribute('id', 'wishlist');
+        main.appendChild(wishlist);
+
+
+        gameList.innerHTML = `
+        <h2>Game List:</h2>
+        <h3 class="gameTitle">Game 1 Title</h3>
+        <button class="wishlistBtn">Add to Wishlist</button>
+        <h3 class="gameTitle">Game 2 Title</h3>
+        <button class="wishlistBtn">Add to Wishlist</button>
+        <h3 class="gameTitle">Game 3 Title</h3>
+        <button class="wishlistBtn">Add to Wishlist</button>
+        <h3 class="gameTitle">Game 4 Title</h3>
+        <button class="wishlistBtn">Add to Wishlist</button>
+        <h3 class="gameTitle">Game 5 Title</h3>
+        <button class="wishlistBtn">Add to Wishlist</button>
+        <h3 class="gameTitle">Game 6 Title</h3>
+        <button class="wishlistBtn">Add to Wishlist</button>
+        `;
+
+        if (savedWishlist.length === 0) {
+            wishlist.innerHTML = 
+            `
+            <h2 class="gameTitle">Your wishlist:</h2>
+            <p>There are no games in your wishlist.</p>
+            `
+        } else {
+            wishlist.innerHTML = `<h2 class="gameTitle">Your wishlist:</h2>`;
+            
+            for (var i = 0; i < savedWishlist.length; i++) {
+            var game = document.createElement('h3');
+            game.setAttribute('class', 'gameTitle');
+            game.textContent = savedWishlist[i];
+            wishlist.appendChild(game);
+        }
+        }
+
+        main.addEventListener('click', function(event) {
+            if (event.target.matches('.wishlistBtn')) {
+                //console.log('button clicked');
+                //console.log(event.target.previousElementSibling.textContent); 
+                savedWishlist.push(event.target.previousElementSibling.textContent); // previousElementSibling is the h2 element
+                localStorage.setItem('wishlist', JSON.stringify(savedWishlist));
+                //console.log(wishlist);
+                location.reload(); // reloads the page to update the wishlist
+            }
+        })
+
+        // THIS IS PRELIMINARY CODE AND WILL NOT BE USED IN FINAL PRODUCT
+    
+    </script>
+    
+</body>
+</html>
