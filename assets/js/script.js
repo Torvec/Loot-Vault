@@ -1,7 +1,12 @@
 const apiKey = 'cb7fd697d0f04be5879ce9e0eb0c1473';
 const gamesDiv = document.getElementById('games');
 const searchBtn = document.getElementById('search-btn')
-  function fetchGames() {
+const bestDealBtn = document.getElementById('best-deals')
+var gamesContainer = document.getElementById('games-container')
+
+  
+
+function fetchGames() {
     var search = document.getElementById('searchInput').value
     let slug = search.split(' ').join('-').toLowerCase()
     const gamesUrl = `https://api.rawg.io/api/games?key=${apiKey}&search=${slug}&dates=2019-09-01,2019-09-30&platforms=18,1,7`;
