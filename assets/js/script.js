@@ -1,5 +1,4 @@
 const apiKey = 'cb7fd697d0f04be5879ce9e0eb0c1473';
-//const gamesDiv = document.getElementById('games');
 const searchBtn = document.getElementById('search-button')
 const bestDealBtn = document.getElementById('best-deals')
 var gamesContainer = document.getElementById('games-container')
@@ -10,7 +9,7 @@ function fetchGames() {
   gamesContainer.innerHTML = ''
     var search = document.getElementById('searchInput').value
     let slug = search.split(' ').join('-').toLowerCase()
-    const gamesUrl = `https://api.rawg.io/api/games?key=${apiKey}&search=${slug}&dates=2019-09-01,2019-09-30&platforms=18,1,7`;
+    const gamesUrl = `https://api.rawg.io/api/games?key=${apiKey}&search=${slug}&platforms=18,1,7`;
     fetch(gamesUrl)
       .then(response => response.json()) 
       .then(data => { 
@@ -23,7 +22,7 @@ function fetchGames() {
         // Loop through the games and display their names
           data.results.forEach(game => {
             const gameContainer = document.createElement('div');
-        gameContainer.classList.add('game-container');
+            gameContainer.classList.add('game-container');
             let screenshots = '';
             if (game.short_screenshots.length > 0) {
                screenshots = game.short_screenshots[0].image
