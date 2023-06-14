@@ -16,13 +16,20 @@
     <title>Loot Vault</title>
   </head>
   <body>
-    <header>
-      <div class="is-flex">
-        <h1 class="bd has-text-right">Loot Vault</h1>
-        <div id="search-bar">
+    <header class="bd">
+      <div class="bd is-flex">
+        <h1 class="bd is-size-2">Loot Vault</h1>
+        <div id="search-bar" class="is-justify-content-center">
           <form>
-            <input id="searchInput" type="text" placeholder="Search" />
-            <button type="submit" id="search-button">Search</button>
+            <input
+              id="searchInput"
+              type="text"
+              placeholder="Search"
+              class="is-size-3"
+            />
+            <button type="submit" id="search-button" class="is-size-3">
+              Search
+            </button>
           </form>
         </div>
       </div>
@@ -30,9 +37,9 @@
         <ul
           class="is-flex is-justify-content-center is-justify-content-space-between"
         >
-          <li><a id="genre-button">Genres</a></li>
-          <li><a id="home-button">Home</a></li>
-          <li><a id="wishlist-button">Wishlist</a></li>
+          <li><a id="genre-button" class="page-links">Genres</a></li>
+          <li><a id="home-button" class="page-links">Home</a></li>
+          <li><a id="wishlist-button" class="page-links">Wishlist</a></li>
         </ul>
       </nav>
     </header>
@@ -60,10 +67,10 @@
       <p>Filler Text End</p>
       <div></div>
     </main>
-    <footer class="bd">
-      <div class="content">
+    <footer>
+      <div class="is-flex is-justify-content-space-evenly">
         <section>
-          <h3 class="has-text-info-dark">Meme Team:</h3>
+          <h3 class="foot-title">Meme Team:</h3>
           <ul>
             <li>
               Avery Myers -
@@ -94,7 +101,7 @@
           </ul>
         </section>
         <section>
-          <h3 class="has-text-info-dark">Powered by:</h3>
+          <h3 class="foot-title">Powered by:</h3>
           <ul>
             <li>
               <a href="https://www.gamerpower.com/api-read" target="_blank"
