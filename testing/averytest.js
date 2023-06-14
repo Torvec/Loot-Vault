@@ -1,4 +1,4 @@
-function fetchHighestRated() {
+/* function fetchHighestRated() {
     const gamesUrl = `https://www.cheapshark.com/api/1.0/deals?storeID=1&metacritic=80&steamRating=80`;
   
     // Get the parent container where games will be displayed
@@ -13,6 +13,7 @@ function fetchHighestRated() {
           const steamRatingPercent = game.steamRatingPercent;
           const normalPrice = game.normalPrice;
           const id = game.dealID;
+          const averageRating = (metacriticReview + steamRatingPercent) / 2;
   
           // Create a new container element for the game
           const gameContainer = document.createElement("div");
@@ -23,8 +24,10 @@ function fetchHighestRated() {
             <h3>${gameName}</h3>
             <p>Metacritic Score: ${metacriticReview}</p>
             <p>Steam Rating: ${steamRatingPercent}</p>
+            <p>Average Rating: ${averageRating}</p>
             <p>Normal Price: ${normalPrice}</p>
             <a href="https://www.cheapshark.com/redirect?dealID=${id}" target="_blank">Buy Now</a>
+
             <p>-----------------------------</p>
           `;
   
@@ -38,9 +41,25 @@ function fetchHighestRated() {
   }
   
   
-  
   highestRatedBtn.addEventListener('click', function(event) {
-    event.preventDefault()
-    gamesContainer.innerHTML = ""
-    fetchHighestRated(event)
-    })
+    event.preventDefault();
+    gamesContainer.innerHTML = "";
+    fetchHighestRated();
+  });
+
+
+   */
+
+
+  function fetchHighRated(){
+    var gamesUrl = `https://api.rawg.io/api/games?key=${apiKey}&dates=2019-09-01,2019-09-30&platforms=18,1,7&ordering=-rating`;
+    fetch(gamesUrl)
+      .then(response => response.json()) 
+      .then(data => { 
+            const gameName = game.name;
+            const gameRating = game.rating;
+            console.log(gameName, gameRating);
+        });
+}
+
+fetchHighRated()

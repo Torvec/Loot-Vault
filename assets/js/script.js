@@ -68,7 +68,7 @@ function fetchDiscounts() {
         // Create a new container element for the game
         const gameContainer = document.createElement("div");
         gameContainer.classList.add("individual-container");
-
+             
         // Create the HTML content for the game container
         gameContainer.innerHTML = `
           <h3>${gameName}</h3>
