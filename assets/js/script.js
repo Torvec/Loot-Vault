@@ -1,6 +1,6 @@
 const apiKey = 'cb7fd697d0f04be5879ce9e0eb0c1473';
-const gamesDiv = document.getElementById('games');
-const searchBtn = document.getElementById('search-btn')
+//const gamesDiv = document.getElementById('games');
+const searchBtn = document.getElementById('search-button')
 const bestDealBtn = document.getElementById('best-deals')
 const highestRatedBtn = document.getElementById('highest-rated')
 var gamesContainer = document.getElementById('games-container')
@@ -8,6 +8,7 @@ var gamesContainer = document.getElementById('games-container')
   
 
 function fetchGames() {
+  gamesContainer.innerHTML = ''
     var search = document.getElementById('searchInput').value
     let slug = search.split(' ').join('-').toLowerCase()
     const gamesUrl = `https://api.rawg.io/api/games?key=${apiKey}&search=${slug}&dates=2019-09-01,2019-09-30&platforms=18,1,7`;
@@ -15,30 +16,44 @@ function fetchGames() {
       .then(response => response.json()) 
       .then(data => { 
         console.log(data.results)
-        if (data.results === []) {
+        if (data.results.length === 0) {
             const gameName = document.createElement('p');
             gameName.textContent = 'No results found';
-            gamesDiv.appendChild(gameName);
+            gamesContainer.appendChild(gameName);
           }
         // Loop through the games and display their names
           data.results.forEach(game => {
-          const gameName = document.createElement('p');
-          gameName.textContent = game.name;
-          gamesDiv.appendChild(gameName);
-        });
-      })
+            const gameContainer = document.createElement('div');
+        gameContainer.classList.add('game-container');
+            let screenshots = '';
+            if (game.short_screenshots.length > 0) {
+               screenshots = game.short_screenshots[0].image
+            }
+        gameContainer.classList.add('game-container');
+        gameContainer.innerHTML = `
+          <h3>${game.name}</h3>
+          <p>Rating: ${game.rating}</p>
+          <p>Release Date: ${game.released}</p>
+          <img src="${screenshots}" alt="">
+          <!-- Add more properties as needed -->
+          <p>-----------------------------</p>
+        `;
+
+        gamesContainer.appendChild(gameContainer);
+      });
+    })
       .catch(error => {
         console.error('Error:', error);
       });
       
   }
   
-  //fetchGames();
+ fetchGames();
   
-  // searchBtn.addEventListener('click', function(event) {
-  // event.preventDefault()
-  //  fetchGames(event)
-  // }) 
+  searchBtn.addEventListener('click', function(event) {
+  event.preventDefault()
+  fetchGames(event)
+   }) 
 
 
 
