@@ -24,24 +24,33 @@ body {
 
 header {
   width: 100%;
-  background-color: #212029;
+  background-color: #1a1d22;
+}
+
+.page-links {
+  text-decoration: none;
+  font-size: 40px;
+  color: #3a3f46;
+}
+
+.page-links:hover {
+  color: #606875;
 }
 
 main {
   width: 90%;
   max-width: 1200px;
   margin: 0 auto;
-  background-color: #3a3f46;
+  background-color: #454b54;
 }
 
 footer {
   width: 100%;
-  background-color: #212029;
+  background-color: #191d22;
 }
 
-.content {
-  display: flex;
-  justify-content: space-evenly;
+.foot-title {
+  color: #4a5b7d;
 }
 
 .bd {
