@@ -16,7 +16,7 @@ html {
 }
 
 body {
-  background-color: black;
+  background-color: #17191c;
   color: white;
   font-size: 1.5rem; /* 15px */
   font-family: sans-serif;
@@ -24,24 +24,31 @@ body {
 
 header {
   width: 100%;
-  background-color: slategray;
+  background-color: #1a1d22;
+}
+
+.page-links {
+  color: #3a3f46;
+}
+
+.page-links:hover {
+  color: #606875;
 }
 
 main {
   width: 90%;
   max-width: 1200px;
   margin: 0 auto;
-  background-color: darkgray;
+  background-color: #454b54;
 }
 
 footer {
   width: 100%;
-  background-color: slategray;
+  background-color: #191d22;
 }
 
-.content {
-  display: flex;
-  justify-content: space-evenly;
+.foot-title {
+  color: #4a5b7d;
 }
 
 .bd {
