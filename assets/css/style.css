@@ -26,22 +26,29 @@ body {
 header {
   width: 100%;
   background-color: #1a1d22;
+  position: fixed;
 }
 
 .logo {
-  width: 30vh;
-  height: 6vh;
+  width: 34vh;
+  height: 6.5vh;
 }
 
 .search-bar {
   border-radius: 5px 5px;
   border: white;
 }
+
 .search-button {
-  background-color: darkgrey;
-  border: darkgray;
+  background-color: #454b54;
+  border: #454b54 1px;
   border-radius: 5px 5px;
   color: white;
+}
+
+.search-button:hover {
+  background-color: #606875;
+  border: #606875;
 }
 
 .page-links {
@@ -57,6 +64,19 @@ main {
   max-width: 1200px;
   margin: 0 auto;
   background-color: #454b54;
+  padding-top: 13vh;
+}
+
+.more-items {
+  border-radius: 5px 5px;
+  color: white;
+  background-color: #454b54;
+  border: #454b54 solid 1px;
+}
+
+.more-items:hover {
+  background-color: #606875;
+  border: #606875 solid 1px;
 }
 
 footer {
@@ -65,9 +85,13 @@ footer {
 }
 
 .foot-title {
-  color: #4a5b7d;
+  color: #134c72;
 }
 
 .bd {
   border: 1px solid red;
+}
+
+.line {
+  border: #17191c solid 7px;
 }
