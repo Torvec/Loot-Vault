@@ -66,15 +66,11 @@ function fetchHighRated() {
       games.forEach(game => {
         const gameName = game.name;
         const metacritic = game.metacritic;
-        const purchaseLink = game.stores[1];
         console.log(gameName, metacritic);
 
         gamesContainer.innerHTML += `  
           <h3>${gameName}</h3>
           <p>Metacritic Score: ${metacritic}</p>
-          <a href="${purchaseLink}" target="_blank">Buy Now</a>
-
-
           <p>-----------------------------</p>
         `;
       });
