@@ -18,7 +18,6 @@ This page is used for grading purposes by the UC Berkley coding bootcamp staff.
 
 ## Credits
 
-[Geocoding API](https://openweathermap.org/api/geocoding-api)
 - [Bulma Framework](https://bulma.io/)
 - [RAWG API](https://rawg.io/apidocs)
 - [CheapShark API](https://apidocs.cheapshark.com/)
