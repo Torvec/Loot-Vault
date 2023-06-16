@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,500;0,700;1,300;1,500;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+    <title>Loot Vault Refactor</title>
+    <style>
+        .bg-clr-1 {background: #1A1D22;}
+        .bg-clr-2 {background: #1B273B;}
+        .bg-clr-3 {background: #535D6E;}
+        .txt-clr-1 {color: #8D9FBA;}
+        .logo {
+            max-width: 300px;
+        }
+        nav ul li a:hover  {
+            color: #FFD262;
+        }
+    </style>
+</head>
+<body class="bg-clr-1 has-text-grey-lighter">
+    <header class="p-2">
+        <div class="container is-fluid is-flex is-justify-content-space-between is-align-items-center">
+            <a href="#"><img class="logo" src="../assets/images/FInal Logo.png"></a>
+            <form id="search-bar">
+                <input id="searchInput" type="text" placeholder="Search">
+                <button type="submit" id="search-button">Search</button>
+            </form>
+        </div>
+    </header>
+    <nav class="container is-fluid bg-clr-2">
+        <ul class="is-flex is-justify-content-space-evenly p-2">
+            <li><a class="txt-clr-1 is-size-4" id="best-deals">Best Deals</a></li>
+            <li><a class="txt-clr-1 is-size-4" id="highest-rated">Highest Rated</a></li>
+            <li><a class="txt-clr-1 is-size-4" id="fg-button">Free Games</a></li>
+            <li><a class="txt-clr-1 is-size-4" id="wishlist-button">Wishlist</a></li>
+        </ul>
+    </nav>
+    <main class="bg-clr-3" style="height: 100vh;">
+
+        <!-- DYNAMIC GENERATED CONTENT HERE -->
+
+    </main>
+    <footer class="footer bg-clr-1">
+        <div class="container is-fluid columns">
+            <section class="column">
+                <h3 class="is-size-4 has-text-weight-bold">Meme Team:</h3>
+                <ul>
+                    <li>Avery Myers - <a href="https://github.com/AveryJMyers" target="_blank">AveryJMyers</a></li>
+                    <li>Charles Alagos - <a href="https://github.com/Kregkoda" target="_blank">Kregkoda</a></li>
+                    <li>Edward Von Schondorf - <a href="https://github.com/Torvec" target="_blank">Torvec</a></li>
+                    <li>Jacob Simmons - <a href="https://github.com/Justcallmejayy" target="_blank">Justcallmejayy</a></li>
+                    <li>Kevin Gagante - <a href="https://github.com/Gagucci" target="_blank">Gagucci</a></li>
+                </ul>
+            </section>
+            <section class="column">
+                <h3 class="is-size-4 has-text-weight-bold">Powered by:</h3>
+                <ul>
+                    <li><a href="https://www.gamerpower.com/api-read" target="_blank">Gamerpower Free Games API</a></li>
+                    <li><a href="https://apidocs.cheapshark.com/" target="_blank">Cheapshark API</a></li>
+                    <li><a href="https://rawg.io/apidocs" target="_blank">RAWG API</a></li>
+                </ul>
+            </section>
+            <section class="column">
+                <h3 class="is-size-4 has-text-weight-bold">About:</h3>
+                <p>A UC Berkley Full Stack Web Development Bootcamp Project</p>
+                <p>Created June 2023</p>
+            </section>
+        </div>
+    </footer>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js" integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="./averytest.js"></script> -->
+</body>
+</html>
