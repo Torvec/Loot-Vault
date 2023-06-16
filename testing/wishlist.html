@@ -28,7 +28,8 @@
         <!-- Generated content -->
     </main>
     <footer>
-        <p>This is only a test</p>
+        <p><button id="clearWishlistBtn">Clear Wishlist</button>
+        </p>
     </footer>
     <script>
         
@@ -86,6 +87,12 @@
                 location.reload(); // reloads the page to update the wishlist
             }
         })
+        var clearWishlistBtn = document.getElementById('clearWishlistBtn');
+        clearWishlistBtn.addEventListener('click', function () {
+        localStorage.removeItem('wishlist');
+        location.reload();
+        });
+        //clears local storage to the 'clear wishlist' button
 
         // THIS IS PRELIMINARY CODE AND WILL NOT BE USED IN FINAL PRODUCT
     
