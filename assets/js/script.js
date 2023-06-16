@@ -4,6 +4,9 @@ const bestDealBtn = document.getElementById('best-deals')
 const highestRatedBtn = document.getElementById('highest-rated')
 var gamesContainer = document.getElementById('games-container')
 
+// populates landing page
+fetchDiscounts();
+
 function fetchGames() {
   gamesContainer.innerHTML = ''
     var search = document.getElementById('searchInput').value
@@ -88,6 +91,7 @@ function fetchDiscounts() {
           <p>Sale Price: $${salePrice}</p>
           <p>Deal Rating: ${dealRating}</p>
           <a href="https://www.cheapshark.com/redirect?dealID=${id}" target="_blank">Buy Now</a>
+          <button> test </button>
           <p>-----------------------------</p>
         `;
 
@@ -149,6 +153,7 @@ function fetchFreeGames() {
 
   // This should be called when the Free Games button is clicked
   // fetchFreeGames(); 
+
 
 
 
