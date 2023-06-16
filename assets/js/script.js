@@ -4,6 +4,9 @@ const bestDealBtn = document.getElementById('best-deals')
 const highestRatedBtn = document.getElementById('highest-rated')
 var gamesContainer = document.getElementById('games-container')
 
+// populates landing page
+fetchDiscounts();
+
 function fetchGames() {
   gamesContainer.innerHTML = ''
     var search = document.getElementById('searchInput').value
@@ -100,6 +103,7 @@ function fetchDiscounts() {
       console.error('Error:', error);
     });
 }
+
 
 
 
