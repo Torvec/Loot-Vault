@@ -1,4 +1,5 @@
-# Bootcamp-Project-1 Loot Vault
+# Loot Vault
+A UC Berkley Full Stack Web Development Bootcamp Project 01
 
 ## Description
 
@@ -6,7 +7,10 @@ A website for gamers on a budget!
 
 ## GitHub Pages
 
-Visit the GitHub pages link to see website: COMING SOON!
+Visit the GitHub pages link to see website: [Loot Vault](https://torvec.github.io/Challenge_6_Weather_Dashboard/)
+
+## Project Presentation
+[Canva Presentation](https://www.canva.com/design/DAFlwqLIxJg/6hN9FE7gGSvmlq77uXiANg/view)
 
 ## Visuals
 
@@ -18,6 +22,8 @@ This page is used for grading purposes by the UC Berkley coding bootcamp staff.
 
 ## Credits
 
+- [Logo.com](https://logo.com/)
+- [DayJS](https://day.js.org/)
 - [Bulma Framework](https://bulma.io/)
 - [RAWG API](https://rawg.io/apidocs)
 - [CheapShark API](https://apidocs.cheapshark.com/)
