@@ -23,23 +23,27 @@
   </head>
   <body>
     <header>
-      <div class="bd is-flex">
-        <h1 class="bd pg-title">Loot Vault</h1>
-        <div id="search-bar" class="is-flex is-align-content-end p-3">
-          <form>
-            <input
-              id="searchInput"
-              type="text"
-              placeholder="Search"
-              class="is-size-3"
-            />
-            <button type="submit" id="search-button" class="is-size-3">
-              Search
-            </button>
-          </form>
-        </div>
+      <div
+        class="is-flex is-justify-content-space-between is-align-items-center p-4"
+      >
+        <img src="./assets/images/FInal Logo.png" class="logo" />
+        <form id="search-bar">
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Search"
+            class="is-size-3 p-2 search-bar"
+          />
+          <button
+            type="submit"
+            id="search-button"
+            class="is-size-3 p-2 search-button"
+          >
+            Search
+          </button>
+        </form>
       </div>
-      <nav class="container">
+      <nav class="container p-1">
         <ul
           class="is-flex is-justify-content-center is-justify-content-space-between"
         >
@@ -60,10 +64,10 @@
       <!-- container to populate with game results -->
       <div id="games-container"></div>
     </main>
-    <footer class="p-2">
+    <footer class="p-3">
       <div class="is-flex is-justify-content-space-evenly">
         <section>
-          <h3 class="foot-title">Meme Team:</h3>
+          <h3 class="foot-title is-size-2 has-text-weight-bold">Meme Team:</h3>
           <ul>
             <li>
               Avery Myers -
@@ -92,7 +96,7 @@
           </ul>
         </section>
         <section>
-          <h3 class="foot-title">Powered by:</h3>
+          <h3 class="foot-title is-size-2 has-text-weight-bold">Powered by:</h3>
           <ul>
             <li>
               <a href="https://www.gamerpower.com/api-read" target="_blank"
