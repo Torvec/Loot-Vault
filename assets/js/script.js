@@ -2,7 +2,8 @@ const apiKey = 'cb7fd697d0f04be5879ce9e0eb0c1473';
 const searchBtn = document.getElementById('search-button')
 const bestDealBtn = document.getElementById('best-deals')
 const highestRatedBtn = document.getElementById('highest-rated')
-var gamesContainer = document.getElementById('games-container')
+const gamesContainer = document.getElementById('games-container')
+const freeGamesBtn = document.getElementById('fg-button')
 
 // populates landing page
 fetchDiscounts();
@@ -127,7 +128,7 @@ function fetchFreeGames() {
           var gameList = document.createElement('div');
           gameList.setAttribute('id', 'gameList');
           document.body.appendChild(gameList);
-          gameList.innerHTML = '';
+          gamesContainer.innerHTML = '';
           
           for (let i = 0; i < result.length; i++) {
               var gameTitle = result[i].title;
@@ -136,13 +137,13 @@ function fetchFreeGames() {
               var status = result[i].status;
               var platforms = result[i].platforms;
               var worth = result[i].worth;
-              gameList.innerHTML += `
+              gamesContainer.innerHTML += `
               <h2>Game: ${gameTitle}</h2>
-              <p>Description: ${gameDescription}</p>
               <p>End Date: ${endDate}</p>
               <p>Status: ${status}</p>
               <p>Platforms: ${platforms}</p>
-              <p>Worth: $${worth}</p>
+              <p>Worth: ${worth}</p>
+              <p>-----------------------------</p>
               `
           }
       })
@@ -150,6 +151,13 @@ function fetchFreeGames() {
           console.error(error);
       });
   }
+
+
+  freeGamesBtn.addEventListener('click', function(event) {
+    event.preventDefault()
+    fetchFreeGames(event)
+    })
+
 
   // This should be called when the Free Games button is clicked
   // fetchFreeGames(); 
