@@ -49,37 +49,44 @@
 
 
    */
-  let ratedStartDate = dayjs().format('YYYY-MM-DD')
-  let ratedEndDate = dayjs().subtract(30, 'days').format('YYYY-MM-DD')
 
-  function fetchHighRated() {
-    var gamesUrl = `https://api.rawg.io/api/games?key=${apiKey}&dates=2019-09-01,2019-09-30&platforms=18,1,7&ordering=-rating`;
-  
-    fetch(gamesUrl)
-      .then(response => response.json())
-      .then(data => {
-        var games = data.results.slice(0, 10);
-  
-        games.forEach(game => {
-          const gameName = game.name;
-          const gameRating = game.rating;
-          console.log(gameName, gameRating);
-  
-          gamesContainer.innerHTML += `  
-            <h3>${gameName}</h3>
-            <p>Rating: ${gameRating}</p>
-            <p>-----------------------------</p>
-          `;
-        });
-      })
-      .catch(error => {
-        console.error('Error:', error);
+  //&dates=${ratedStartDate},${ratedEndDate}
+  let ratedStartDate = dayjs().format('YYYY-MM-DD')
+  let ratedEndDate = dayjs().subtract(1, 'year').format('YYYY-MM-DD')
+
+function fetchHighRated() {
+  var gamesUrl = `https://api.rawg.io/api/games?key=${apiKey}&metacritic&platforms=18,1,7&ordering=-metacritic`;
+
+  fetch(gamesUrl)
+    .then(response => response.json())
+    .then(data => {
+      var games = data.results.slice(0, 10);
+      console.log(data)
+
+      games.forEach(game => {
+        const gameName = game.name;
+        const metacritic = game.metacritic;
+        const purchaseLink = game.stores[1];
+        console.log(gameName, metacritic);
+
+        gamesContainer.innerHTML += `  
+          <h3>${gameName}</h3>
+          <p>Metacritic Score: ${metacritic}</p>
+          <a href="${purchaseLink}" target="_blank">Buy Now</a>
+
+
+          <p>-----------------------------</p>
+        `;
       });
-  }
-  
-  highestRatedBtn.addEventListener('click', function(event) {
-    event.preventDefault();
-    gamesContainer.innerHTML = "";
-    fetchHighRated();
-  });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+highestRatedBtn.addEventListener('click', function(event) {
+  event.preventDefault();
+  gamesContainer.innerHTML = "";
+  fetchHighRated();
+});
   

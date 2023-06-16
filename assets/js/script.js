@@ -88,6 +88,7 @@ function fetchDiscounts() {
           <p>Sale Price: $${salePrice}</p>
           <p>Deal Rating: ${dealRating}</p>
           <a href="https://www.cheapshark.com/redirect?dealID=${id}" target="_blank">Buy Now</a>
+          <button> test </button>
           <p>-----------------------------</p>
         `;
 
