@@ -66,11 +66,20 @@ function fetchHighRated() {
       games.forEach(game => {
         const gameName = game.name;
         const metacritic = game.metacritic;
+        var playtime = game.playtime;
+        let platforms = game.platforms.map(platform => platform.platform.name).join(", ");
+        
         console.log(gameName, metacritic);
+        if (playtime === 0) {
+          playtime = "N/A"
+        }
 
         gamesContainer.innerHTML += `  
           <h3>${gameName}</h3>
           <p>Metacritic Score: ${metacritic}</p>
+          <p>Playtime: ${playtime} hours</p>
+          <p> Platforms: ${platforms}
+
           <p>-----------------------------</p>
         `;
       });
