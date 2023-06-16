@@ -79,6 +79,7 @@ function fetchDiscounts() {
         const normalPrice = game.normalPrice;
         const salePrice = game.salePrice;
         const dealRating = game.dealRating;
+        const metacriticScore = game.metacriticScore;
         const id = game.dealID;
 
         // Create a new container element for the game
@@ -88,6 +89,7 @@ function fetchDiscounts() {
         // Create the HTML content for the game container
         gameContainer.innerHTML = `
           <h3>${gameName}</h3>
+          <p>Metacritic Score: ${metacriticScore}</p>
           <p>Normal Price: $${normalPrice}</p>
           <p>Sale Price: $${salePrice}</p>
           <p>Deal Rating: ${dealRating}</p>
@@ -96,7 +98,7 @@ function fetchDiscounts() {
         `;
 
         // Append the game container to the parent container
-        parentContainer.appendChild(gameContainer);
+        gamesContainer.appendChild(gameContainer);
       });
     })
     .catch(error => {
@@ -136,7 +138,10 @@ function fetchFreeGames() {
               var status = result[i].status;
               var platforms = result[i].platforms;
               var worth = result[i].worth;
-              gamesContainer.innerHTML += `
+              const gameContainer = document.createElement("div");
+              gameContainer.classList.add("individual-container");
+
+              gameContainer.innerHTML += `
               <h2>Game: ${gameTitle}</h2>
               <p>End Date: ${endDate}</p>
               <p>Status: ${status}</p>
@@ -144,6 +149,7 @@ function fetchFreeGames() {
               <p>Worth: ${worth}</p>
               <p>-----------------------------</p>
               `
+              gamesContainer.appendChild(gameContainer);
           }
       })
       .catch(function(error) {
