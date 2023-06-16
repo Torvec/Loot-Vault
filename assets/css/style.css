@@ -40,8 +40,8 @@ header {
 }
 
 .search-button {
-  background-color: darkgrey;
-  border: darkgray;
+  background-color: #454b54;
+  border: #454b54 1px;
   border-radius: 5px 5px;
   color: white;
 }
@@ -67,13 +67,25 @@ main {
   padding-top: 13vh;
 }
 
+.more-items {
+  border-radius: 5px 5px;
+  color: white;
+  background-color: #454b54;
+  border: #454b54 solid 1px;
+}
+
+.more-items:hover {
+  background-color: #606875;
+  border: #606875 solid 1px;
+}
+
 footer {
   width: 100%;
   background-color: #191d22;
 }
 
 .foot-title {
-  color: #4a5b7d;
+  color: #134c72;
 }
 
 .bd {
