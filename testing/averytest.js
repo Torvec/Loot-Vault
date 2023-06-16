@@ -80,13 +80,14 @@ function fetchHighRated() {
         }
 
         gameContainer.innerHTML += `
+          <div class="line"></div>
           <div class="p-5 m-5 bd">  
           <h3 class="is-size-2 has-text-weight-bold">${gameName}</h3>
           <p>Metacritic Score: ${metacritic}</p>
           <p>Playtime: ${playtime} hours</p>
           <p> Platforms: ${platforms}
           </div>
-          <p>-----------------------------</p>
+          <div class="line"></div>
         `;
         gamesContainer.appendChild(gameContainer);
       });

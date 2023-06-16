@@ -79,3 +79,7 @@ footer {
 .bd {
   border: 1px solid red;
 }
+
+.line {
+  border: #17191c solid 7px;
+}
