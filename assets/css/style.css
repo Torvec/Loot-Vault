@@ -46,6 +46,11 @@ header {
   color: white;
 }
 
+.search-button:hover {
+  background-color: #606875;
+  border: #606875;
+}
+
 .page-links {
   color: #8d95a0;
 }

@@ -32,7 +32,7 @@ function fetchGames() {
         gameContainer.classList.add("game-container");
         gameContainer.innerHTML = `
           <div class="p-5 m-5 bd">
-          <h3>${game.name}</h3>
+          <h3 class="is-size-2 has-text-weight-bold">${game.name}</h3>
           <p>Rating: ${game.rating}</p>
           <p>Release Date: ${game.released}</p>
           <img src="${screenshots}" alt="">
@@ -87,12 +87,12 @@ function fetchDiscounts() {
         // Create the HTML content for the game container
         gameContainer.innerHTML = `
           <div class="p-5 m-5 bd">
-          <h3>${gameName}</h3>
+          <h3 class="is-size-2 has-text-weight-bold">${gameName}</h3>
           <p>Metacritic Score: ${metacriticScore}</p>
           <p>Normal Price: $${normalPrice}</p>
           <p>Sale Price: $${salePrice}</p>
           <p>Deal Rating: ${dealRating}</p>
-          <a href="https://www.cheapshark.com/redirect?dealID=${id}" target="_blank">Buy Now</a>
+          <a href="https://www.cheapshark.com/redirect?dealID=${id}" target="_blank" class="is-size-3">Buy Now</a>
           </div>
           <p>-----------------------------</p>
         `;
@@ -144,7 +144,7 @@ function fetchFreeGames() {
 
         gameContainer.innerHTML += `
               <div class="p-5 m-5 bd">
-              <h2>Game: ${gameTitle}</h2>
+              <h2 class="is-size-2 has-text-weight-bold">${gameTitle}</h2>
               <p>End Date: ${endDate}</p>
               <p>Status: ${status}</p>
               <p>Platforms: ${platforms}</p>
