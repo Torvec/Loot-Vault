@@ -8,6 +8,12 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,500;0,700;1,300;1,500;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
@@ -16,10 +22,10 @@
     <title>Loot Vault</title>
   </head>
   <body>
-    <header class="bd">
+    <header>
       <div class="bd is-flex">
-        <h1 class="bd is-size-2">Loot Vault</h1>
-        <div id="search-bar" class="is-justify-content-center">
+        <h1 class="bd pg-title">Loot Vault</h1>
+        <div id="search-bar" class="is-flex is-align-content-end p-3">
           <form>
             <input
               id="searchInput"
@@ -54,10 +60,8 @@
       </nav>
     </header>
     <main>
-      <!-- container that holds game results content -->
-      <div id="games-container">
-        <!-- container to populate with game results -->
-      </div>
+      <!-- container to populate with game results -->
+      <div id="games-container"></div>
     </main>
     <footer class="p-2">
       <div class="is-flex is-justify-content-space-evenly">
