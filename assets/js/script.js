@@ -100,10 +100,55 @@ function fetchDiscounts() {
     });
 }
 
+// ORIGINAL CODE TAKEN FROM https://rapidapi.com/digiwalls/api/gamerpower AND MODIFIED TO WORK WITH FETCH API
+function fetchFreeGames() {
+  const url = 'https://gamerpower.p.rapidapi.com/api/filter?platform=epic-games-store.steam.android&type=game.loot';
+  const options = {
+      method: 'GET',
+      headers: {
+      'X-RapidAPI-Key': 'b376f2e9e7msh1e177bc5d80ec31p1c15f4jsn146ea5790a77',
+      'X-RapidAPI-Host': 'gamerpower.p.rapidapi.com'
+      }
+  };
 
+  fetch(url, options)
+      .then(function(response) {
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
+      return response.json();
+      })
+      .then(function(result) {
+          console.log(result);
+          var gameList = document.createElement('div');
+          gameList.setAttribute('id', 'gameList');
+          document.body.appendChild(gameList);
+          gameList.innerHTML = '';
+          
+          for (let i = 0; i < result.length; i++) {
+              var gameTitle = result[i].title;
+              var gameDescription = result[i].description;
+              var endDate = result[i].end_date;
+              var status = result[i].status;
+              var platforms = result[i].platforms;
+              var worth = result[i].worth;
+              gameList.innerHTML += `
+              <h2>Game: ${gameTitle}</h2>
+              <p>Description: ${gameDescription}</p>
+              <p>End Date: ${endDate}</p>
+              <p>Status: ${status}</p>
+              <p>Platforms: ${platforms}</p>
+              <p>Worth: $${worth}</p>
+              `
+          }
+      })
+      .catch(function(error) {
+          console.error(error);
+      });
+  }
 
-
-
+  // This should be called when the Free Games button is clicked
+  // fetchFreeGames(); 
 
 
 
