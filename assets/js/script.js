@@ -1,9 +1,9 @@
-const apiKey = 'cb7fd697d0f04be5879ce9e0eb0c1473';
-const searchBtn = document.getElementById('search-button')
-const bestDealBtn = document.getElementById('best-deals')
-const highestRatedBtn = document.getElementById('highest-rated')
-const gamesContainer = document.getElementById('games-container')
-const freeGamesBtn = document.getElementById('fg-button')
+const apiKey = "cb7fd697d0f04be5879ce9e0eb0c1473";
+const searchBtn = document.getElementById("search-button");
+const bestDealBtn = document.getElementById("best-deals");
+const highestRatedBtn = document.getElementById("highest-rated");
+const gamesContainer = document.getElementById("games-container");
+const freeGamesBtn = document.getElementById("fg-button");
 
 fetchDiscounts();
 
@@ -31,10 +31,12 @@ function fetchGames() {
         }
         gameContainer.classList.add("game-container");
         gameContainer.innerHTML = `
+          <div class="p-5 m-5 bd">
           <h3>${game.name}</h3>
           <p>Rating: ${game.rating}</p>
           <p>Release Date: ${game.released}</p>
           <img src="${screenshots}" alt="">
+          </div>
           <!-- Add more properties as needed -->
           <p>-----------------------------</p>
         `;
@@ -84,12 +86,14 @@ function fetchDiscounts() {
 
         // Create the HTML content for the game container
         gameContainer.innerHTML = `
+          <div class="p-5 m-5 bd">
           <h3>${gameName}</h3>
           <p>Metacritic Score: ${metacriticScore}</p>
           <p>Normal Price: $${normalPrice}</p>
           <p>Sale Price: $${salePrice}</p>
           <p>Deal Rating: ${dealRating}</p>
           <a href="https://www.cheapshark.com/redirect?dealID=${id}" target="_blank">Buy Now</a>
+          </div>
           <p>-----------------------------</p>
         `;
 
@@ -120,53 +124,49 @@ function fetchFreeGames() {
         throw new Error("Network response was not ok");
       }
       return response.json();
-    
-      })
-      .then(function(result) {
-          console.log(result);
-          var gameList = document.createElement('div');
-          gameList.setAttribute('id', 'gameList');
-          document.body.appendChild(gameList);
-          gamesContainer.innerHTML = '';
-          
-          for (let i = 0; i < result.length; i++) {
-              var gameTitle = result[i].title;
-              var gameDescription = result[i].description;
-              var endDate = result[i].end_date;
-              var status = result[i].status;
-              var platforms = result[i].platforms;
-              var worth = result[i].worth;
-              const gameContainer = document.createElement("div");
-              gameContainer.classList.add("individual-container");
+    })
+    .then(function (result) {
+      console.log(result);
+      var gameList = document.createElement("div");
+      gameList.setAttribute("id", "gameList");
+      document.body.appendChild(gameList);
+      gamesContainer.innerHTML = "";
 
-              gameContainer.innerHTML += `
+      for (let i = 0; i < result.length; i++) {
+        var gameTitle = result[i].title;
+        var gameDescription = result[i].description;
+        var endDate = result[i].end_date;
+        var status = result[i].status;
+        var platforms = result[i].platforms;
+        var worth = result[i].worth;
+        const gameContainer = document.createElement("div");
+        gameContainer.classList.add("individual-container");
+
+        gameContainer.innerHTML += `
+              <div class="p-5 m-5 bd">
               <h2>Game: ${gameTitle}</h2>
               <p>End Date: ${endDate}</p>
               <p>Status: ${status}</p>
               <p>Platforms: ${platforms}</p>
               <p>Worth: ${worth}</p>
+              </div>
               <p>-----------------------------</p>
-              `
-              gamesContainer.appendChild(gameContainer);
-          }
-      })
-      .catch(function(error) {
-          console.error(error);
-      });
-  }
-
-
-  freeGamesBtn.addEventListener('click', function(event) {
-    event.preventDefault()
-    fetchFreeGames(event)
+              `;
+        gamesContainer.appendChild(gameContainer);
+      }
     })
+    .catch(function (error) {
+      console.error(error);
+    });
+}
 
+freeGamesBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+  fetchFreeGames(event);
+});
 
-  // This should be called when the Free Games button is clicked
-  // fetchFreeGames(); 
-
-
-
+// This should be called when the Free Games button is clicked
+// fetchFreeGames();
 
 // This should be called when the Free Games button is clicked
 // fetchFreeGames();
