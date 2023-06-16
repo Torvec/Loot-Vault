@@ -29,8 +29,8 @@ header {
 }
 
 .logo {
-  width: 24vh;
-  height: 5vh;
+  width: 30vh;
+  height: 6vh;
 }
 
 .search-bar {
@@ -44,15 +44,8 @@ header {
   color: white;
 }
 
-.pg-title {
-  font-family: Roboto, sans-serif;
-  font-weight: 700;
-  font-size: 3.5rem;
-  text-shadow: gray 1px 2px 0px;
-}
-
 .page-links {
-  color: #3a3f46;
+  color: #8d95a0;
 }
 
 .page-links:hover {
