@@ -4,24 +4,49 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,500;0,700;1,300;1,500;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Loot Vault</title>
   </head>
   <body>
-    <header class="bd">
-      <div class="bd is-flex">
-        <h1 class="bd is-size-2">Loot Vault</h1>
-        <div id="search-bar" class="is-justify-content-center">
-          <form>
-            <input id="searchInput" type="text" placeholder="Search" class="is-size-3"/>
-            <button type="submit" id="search-button" class="is-size-3">Search</button>
-          </form>
-        </div>
+    <header>
+      <div
+        class="is-flex is-justify-content-space-between is-align-items-center p-4"
+      >
+        <img src="./assets/images/FInal Logo.png" class="logo" />
+        <form id="search-bar">
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Search"
+            class="is-size-3 p-2 search-bar"
+          />
+          <button
+            type="submit"
+            id="search-button"
+            class="is-size-3 p-2 search-button"
+          >
+            Search
+          </button>
+        </form>
       </div>
-      <nav class="container">
-        <ul class="is-flex is-justify-content-center is-justify-content-space-between">
+      <nav class="container p-1">
+        <ul
+          class="is-flex is-justify-content-center is-justify-content-space-between"
+        >
           <li>
             <a id="best-deals" class="is-size-2 page-links">Best Deals</a>
           </li>
@@ -36,29 +61,56 @@
       </nav>
     </header>
     <main>
-      <!-- container that holds game results content -->
-        <div id="games-container">
-          <!-- container to populate with game results -->
-        </div>
+      <!-- container to populate with game results -->
+      <div id="games-container"></div>
     </main>
-    <footer>
+    <footer class="p-3">
       <div class="is-flex is-justify-content-space-evenly">
         <section>
-          <h3 class="foot-title">Meme Team:</h3>
+          <h3 class="foot-title is-size-2 has-text-weight-bold">Meme Team:</h3>
           <ul>
-            <li>Avery Myers - <a href="https://github.com/AveryJMyers" target="_blank">AveryJMyers</a></li>
-            <li>Charles Alagos - <a href="https://github.com/Kregkoda" target="_blank">Kregkoda</a></li>
-            <li>Edward Von Schondorf - <a href="https://github.com/Torvec" target="_blank">Torvec</a></li>
-            <li>Jacob Simmons - <a href="https://github.com/Justcallmejayy" target="_blank">Justcallmejayy</a></li>
-            <li>Kevin Gagante - <a href="https://github.com/Gagucci" target="_blank">Gagucci</a></li>
+            <li>
+              Avery Myers -
+              <a href="https://github.com/AveryJMyers" target="_blank"
+                >AveryJMyers</a
+              >
+            </li>
+            <li>
+              Charles Alagos -
+              <a href="https://github.com/Kregkoda" target="_blank">Kregkoda</a>
+            </li>
+            <li>
+              Edward Von Schondorf -
+              <a href="https://github.com/Torvec" target="_blank">Torvec</a>
+            </li>
+            <li>
+              Jacob Simmons -
+              <a href="https://github.com/Justcallmejayy" target="_blank"
+                >Justcallmejayy</a
+              >
+            </li>
+            <li>
+              Kevin Gagante -
+              <a href="https://github.com/Gagucci" target="_blank">Gagucci</a>
+            </li>
           </ul>
         </section>
         <section>
-          <h3 class="foot-title">Powered by:</h3>
+          <h3 class="foot-title is-size-2 has-text-weight-bold">Powered by:</h3>
           <ul>
-            <li><a href="https://www.gamerpower.com/api-read" target="_blank">Gamerpower API</a></li>
-            <li><a href="https://apidocs.cheapshark.com/" target="_blank">Cheapshark API</a></li>
-            <li><a href="https://rawg.io/apidocs" target="_blank">RAWG API</a></li>
+            <li>
+              <a href="https://www.gamerpower.com/api-read" target="_blank"
+                >Gamerpower API</a
+              >
+            </li>
+            <li>
+              <a href="https://apidocs.cheapshark.com/" target="_blank"
+                >Cheapshark API</a
+              >
+            </li>
+            <li>
+              <a href="https://rawg.io/apidocs" target="_blank">RAWG API</a>
+            </li>
           </ul>
         </section>
         <section>
@@ -67,9 +119,11 @@
         </section>
       </div>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
-    integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
-    crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
+      integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
+      crossorigin="anonymous"
+    ></script>
     <script src="./assets/js/script.js"></script>
     <script src="./testing/averytest.js"></script>
   </body>
