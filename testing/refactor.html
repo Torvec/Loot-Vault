@@ -3,52 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,500;0,700;1,300;1,500;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600&family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <title>Loot Vault Refactor</title>
     <style>
+        body {font-family: 'Ubuntu', sans-serif;}
+        nav {font-family: 'Teko', sans-serif;}
         .bg-clr-1 {background: #1A1D22;}
         .bg-clr-2 {background: #1B273B;}
         .bg-clr-3 {background: #535D6E;}
-        .txt-clr-1 {color: #8D9FBA;}
-        .logo {
-            max-width: 300px;
+        .logo {max-width: 300px;}
+        #search-bar {
+            max-width: 600px;
         }
-        nav ul li a:hover  {
-            color: #FFD262;
+        #search-input {
+            border-radius: 8px;
         }
+        #search-button {
+            border-radius: 8px;
+            background: #FFD262;
+            cursor: pointer;
+        }
+        nav ul li a {color: #8D9FBA;}
+        nav ul li a:hover {color: #FFD262;}
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        main h2 {font-family: 'Teko', sans-serif;}
+        footer ul li a {color: #8D9FBA;}
+        footer ul li a:hover {color: #FFD262;}
+        footer h3 {font-family: 'Teko', sans-serif;;}
     </style>
 </head>
 <body class="bg-clr-1 has-text-grey-lighter">
+    <!-- FIX THE HEADER, IT DOESN'T LOOK GOOD AT SMALLER RESOLUTIONS -->
     <header class="p-2">
-        <div class="container is-fluid is-flex is-justify-content-space-between is-align-items-center">
+        <div class="container is-fluid is-flex is-justify-content-space-between is-align-items-center flex-wrap">
             <a href="#"><img class="logo" src="../assets/images/FInal Logo.png"></a>
             <form id="search-bar">
-                <input id="searchInput" type="text" placeholder="Search">
-                <button type="submit" id="search-button">Search</button>
+                <input id="search-input" class="is-size-5 p-2" type="text" placeholder="Search For Games" required>
+                <button id="search-button" class="is-size-5 p-2" type="submit">Search</button>
             </form>
         </div>
     </header>
     <nav class="container is-fluid bg-clr-2">
         <ul class="is-flex is-justify-content-space-evenly p-2">
-            <li><a class="txt-clr-1 is-size-4" id="best-deals">Best Deals</a></li>
-            <li><a class="txt-clr-1 is-size-4" id="highest-rated">Highest Rated</a></li>
-            <li><a class="txt-clr-1 is-size-4" id="fg-button">Free Games</a></li>
-            <li><a class="txt-clr-1 is-size-4" id="wishlist-button">Wishlist</a></li>
+            <li><a id="best-deals" class="is-size-3" >Best Deals</a></li>
+            <li><a id="highest-rated" class="is-size-3">Highest Rated</a></li>
+            <li><a id="free-games" class="is-size-3">Free Games</a></li>
+            <li><a id="my-wishlist" class="is-size-3">My Wishlist</a></li>
         </ul>
     </nav>
-    <main class="bg-clr-3" style="height: 100vh;">
+    <main class="bg-clr-3">
 
         <!-- DYNAMIC GENERATED CONTENT HERE -->
 
     </main>
-    <footer class="footer bg-clr-1">
+    <footer class="footer bg-clr-2">
         <div class="container is-fluid columns">
             <section class="column">
-                <h3 class="is-size-4 has-text-weight-bold">Meme Team:</h3>
+                <h3 class="is-size-3 has-text-weight-bold">The Meme Team</h3>
                 <ul>
                     <li>Avery Myers - <a href="https://github.com/AveryJMyers" target="_blank">AveryJMyers</a></li>
                     <li>Charles Alagos - <a href="https://github.com/Kregkoda" target="_blank">Kregkoda</a></li>
@@ -58,22 +76,256 @@
                 </ul>
             </section>
             <section class="column">
-                <h3 class="is-size-4 has-text-weight-bold">Powered by:</h3>
+                <h3 class="is-size-3 has-text-weight-bold">Powered By</h3>
                 <ul>
+                    <li><a href="https://rawg.io/apidocs" target="_blank">RAWG Video Games Database API</a></li>
                     <li><a href="https://www.gamerpower.com/api-read" target="_blank">Gamerpower Free Games API</a></li>
                     <li><a href="https://apidocs.cheapshark.com/" target="_blank">Cheapshark API</a></li>
-                    <li><a href="https://rawg.io/apidocs" target="_blank">RAWG API</a></li>
+                    <li><a href="https://bulma.io/" target="_blank">Bulma CSS Framework</a></li>
                 </ul>
             </section>
             <section class="column">
-                <h3 class="is-size-4 has-text-weight-bold">About:</h3>
+                <h3 class="is-size-3 has-text-weight-bold">About</h3>
+                <p>Project 01: Loot Vault</p>
                 <p>A UC Berkley Full Stack Web Development Bootcamp Project</p>
                 <p>Created June 2023</p>
             </section>
         </div>
     </footer>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js" integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
-    <script src="../assets/js/script.js"></script>
-    <script src="./averytest.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js" integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
+    <script>
+
+    // VARIABLES
+    
+    const apiKey = "cb7fd697d0f04be5879ce9e0eb0c1473";
+    //Nav bar links
+    const searchBtn = document.getElementById("search-button");
+    const bestDealBtn = document.getElementById("best-deals");
+    const highestRatedBtn = document.getElementById("highest-rated");
+    const freeGamesBtn = document.getElementById("free-games");
+    const myWishlistBtn = document.getElementById("my-wishlist");
+    let ratedStartDate = dayjs().format("YYYY-MM-DD");
+    let ratedEndDate = dayjs().subtract(1, "year").format("YYYY-MM-DD");
+
+    const main = document.querySelector("main");
+
+    // FUNCTION DECLARATIONS
+    
+    // Uses the RAWG API to search for a game and display it on the page
+    function searchGames() {
+        var search = document.getElementById("searchInput").value;
+        let slug = search.split(" ").join("-").toLowerCase();
+        const gamesUrl = `https://api.rawg.io/api/games?key=${apiKey}&search=${slug}&platforms=18,1,7`;
+        fetch(gamesUrl)
+            .then((response) => response.json())
+            .then((data) => {
+            console.log(data.results);
+            if (data.results.length === 0) {
+                const gameName = document.createElement("p");
+                gameName.textContent = "No results found";
+                gamesContainer.appendChild(gameName);
+            }
+            data.results.forEach((game) => {
+                const gameContainer = document.createElement("div");
+                gameContainer.classList.add("game-container");
+                let screenshots = "";
+                if (game.short_screenshots.length > 0) {
+                    screenshots = game.short_screenshots[0].image;
+                }
+                gameContainer.classList.add("game-container");
+                gameContainer.innerHTML = `
+                <div class="p-5 bd">
+                <h2 class="is-size-3 has-text-weight-bold">${game.name}</h3>
+                <p>Rating: ${game.rating}</p>
+                <p>Release Date: ${game.released}</p>
+                <img src="${screenshots}" alt="">
+                </div>
+                `;
+                gamesContainer.appendChild(gameContainer);
+            });
+            })
+            .catch((error) => {
+            console.error("Error:", error);
+        });
+    };
+
+    // Uses the Cheapshark API to fetch the best deals and display them on the page
+    function fetchBestDeals() {
+        const cheapsharkURL = `https://www.cheapshark.com/api/1.0/deals?storeID=1&onSale=1&pageSize=10`;
+        fetch(cheapsharkURL)
+            .then((response) => response.json())
+            .then((data) => {
+            data.slice(0, 10).forEach((game) => {
+                const gameName = game.title;
+                const normalPrice = game.normalPrice;
+                const salePrice = game.salePrice;
+                const dealRating = game.dealRating;
+                const metacriticScore = game.metacriticScore;
+                const id = game.dealID;
+                const gameContainer = document.createElement("div");
+                gameContainer.setAttribute("class", "gameContainer");
+                gameContainer.innerHTML = `
+                <div class="container is-fluid p-5 bd">
+                    <h2 class="is-size-3 has-text-weight-bold">${gameName}</h2>
+                    <p>Metacritic Score: ${metacriticScore}</p>
+                    <p>Normal Price: $${normalPrice}</p>
+                    <p>Sale Price: $${salePrice}</p>
+                    <p>Deal Rating: ${dealRating}</p>
+                    <a href="https://www.cheapshark.com/redirect?dealID=${id}" target="_blank" class="is-size-3">Buy Now</a>
+                    <button>Add to Wishlist</button>
+                </div>
+                `;
+                main.appendChild(gameContainer);
+            });
+            })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+    };
+
+    // Uses the RAWG API to fetch the highest rated games and display them on the page
+    function fetchHighestRated() {
+        var rawgURL = `https://api.rawg.io/api/games?key=${apiKey}&metacritic&platforms=18,1,7&ordering=-metacritic`;
+        fetch(rawgURL)
+            .then((response) => response.json())
+            .then((data) => {
+            var games = data.results.slice(0, 10);
+            console.log(data);
+            games.forEach((game) => {
+                const gameName = game.name;
+                const metacritic = game.metacritic;
+                var playtime = game.playtime;
+                let platforms = game.platforms
+                .map((platform) => platform.platform.name)
+                .join(", ");
+                const gameContainer = document.createElement("div");
+                gameContainer.setAttribute("class", "gameContainer");
+                console.log(gameName, metacritic);
+                if (playtime === 0) {
+                    playtime = "N/A";
+                }
+                gameContainer.innerHTML += `
+                <div class="container is-fluid p-5 bd">  
+                    <h2 class="is-size-2 has-text-weight-bold">${gameName}</h2>
+                    <p>Metacritic Score: ${metacritic}</p>
+                    <p>Playtime: ${playtime} hours</p>
+                    <p> Platforms: ${platforms}
+                </div>
+                `;
+                main.appendChild(gameContainer);
+            });
+            })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+    }
+
+    // Uses the Gamerpower API to fetch free games and display them on the page
+    function fetchFreeGames() {
+        // ORIGINAL CODE TAKEN FROM https://rapidapi.com/digiwalls/api/gamerpower AND MODIFIED TO WORK WITH FETCH API
+        const url = "https://gamerpower.p.rapidapi.com/api/filter?platform=epic-games-store.steam.android&type=game.loot";
+        const options = {
+            method: "GET",
+            headers: {
+            "X-RapidAPI-Key": "b376f2e9e7msh1e177bc5d80ec31p1c15f4jsn146ea5790a77",
+            "X-RapidAPI-Host": "gamerpower.p.rapidapi.com",
+            },
+        };
+        fetch(url, options)
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+            })
+            .then(function (result) {
+            for (let i = 0; i < result.length; i++) {
+                var gameTitle = result[i].title;
+                var gameDescription = result[i].description;
+                var endDate = result[i].end_date;
+                var status = result[i].status;
+                var platforms = result[i].platforms;
+                var worth = result[i].worth;
+                const gameContainer = document.createElement("div");
+                gameContainer.setAttribute("class", "gameContainer");
+                gameContainer.innerHTML += `
+                    <div class="gameContainer container is-fluid p-5 bd">
+                        <h2 class="is-size-3 has-text-weight-bold">${gameTitle}</h2>
+                        <p>End Date: ${endDate}</p>
+                        <p>Status: ${status}</p>
+                        <p>Platforms: ${platforms}</p>
+                        <p>Worth: ${worth}</p>
+                    </div>
+                    `;
+                main.appendChild(gameContainer);
+            }
+            })
+        .catch(function (error) {console.error(error)});
+    };
+
+    // Display's the user's wishlist that is saved in local storage
+    function myWishlist() {
+
+    }
+
+    // EVENT LISTENERS
+
+    // Is used to search for games when the search button is clicked
+    searchBtn.addEventListener('click', function(event) {
+        event.preventDefault()
+        main.innerHTML = "";
+        searchGames(event)
+    });
+
+    // Is used to populate the page with the best deals when the best deals button is clicked
+    bestDealBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        main.innerHTML = "";
+        fetchBestDeals(event);
+    });
+
+    // Is used to populate the page with the highest rated games when the highest rated button is clicked
+    highestRatedBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        main.innerHTML = "";
+        fetchHighestRated(event);
+    });
+
+    // Is used to populate the page with a list of free games when the free games button is clicked
+    freeGamesBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        main.innerHTML = "";
+        fetchFreeGames(event);
+    });
+
+    // Is used to display the user's wishlist when the wishlist button is clicked
+    myWishlistBtn.addEventListener("click", function (event) {
+        event.preventDefault();
+        main.innerHTML = "";
+        myWishlist(event);
+    });
+
+    // Will be used to add a game to the user's wishlist when the add to wishlist button is clicked
+    // addToWishListBtn.addEventListener("click", function (event) {
+    //     event.preventDefault();
+    // });
+
+    // Will be used to remove a game from the user's wishlist when the remove from wishlist button is clicked
+    // removeFromWishlistBtn.addEventListener("click", function (event) {
+    //     event.preventDefault();
+    // });
+
+    // Will be used to clear the wishlist when the clear wishlist button is clicked
+    // clearWishlistBtn.addEventListener("click", function (event) {
+    //     event.preventDefault();
+    // });
+
+
+    // FUNCTION CALLS
+
+
+    fetchBestDeals(); // ENSURES THAT THE BEST DEALS ARE DISPLAYED ON THE PAGE WHEN THE LOOT VAULT SITE FIRST LOADS
+
+    </script>
 </body>
 </html>
