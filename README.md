@@ -7,7 +7,7 @@ A website for gamers on a budget!
 
 ## GitHub Pages
 
-Visit the GitHub pages link to see website: [Loot Vault](https://torvec.github.io/Challenge_6_Weather_Dashboard/)
+Visit the GitHub pages link to see website: [Loot Vault](https://torvec.github.io/project_1_Loot_Vault/)
 
 ## Project Presentation
 [Canva Presentation](https://www.canva.com/design/DAFlwqLIxJg/6hN9FE7gGSvmlq77uXiANg/view)
