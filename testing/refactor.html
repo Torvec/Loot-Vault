@@ -10,43 +10,42 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <title>Loot Vault Refactor</title>
     <style>
-        body {font-family: 'Ubuntu', sans-serif;}
-        nav {font-family: 'Teko', sans-serif;}
-        .bg-clr-1 {background: #1A1D22;}
-        .bg-clr-2 {background: #1B273B;}
-        .bg-clr-3 {background: #535D6E;}
-        .logo {max-width: 300px;}
-        #search-bar {
-            max-width: 600px;
+        :root {
+            --clr-1: #1A1D22;
+            --clr-2: #1B273B;
+            --clr-3: #535D6E;
+            --clr-4: #8D9FBA;
+            --clr-5: #FFD262;
+            --ff-main-txt: 'Ubuntu', sans-serif;
+            --ff-hdr-txt: 'Teko', sans-serif;
         }
-        #search-input {
-            border-radius: 8px;
-        }
-        #search-button {
-            border-radius: 8px;
-            background: #FFD262;
-            cursor: pointer;
-        }
-        nav ul li a {color: #8D9FBA;}
-        nav ul li a:hover {color: #FFD262;}
+        .bg-clr-1 {background: var(--clr-1);}
+        .bg-clr-2 {background: var(--clr-2);}
+        .bg-clr-3 {background: var(--clr-3);}
+        .bg-clr-4 {background: var(--clr-5);}
+        body {font-family: var(--ff-main-txt);}
+        nav {font-family: var(--ff-hdr-txt);}
+        nav ul li a {color: var(--clr-4);}
+        nav ul li a:hover {color: var(--clr-5);}
         main {
             max-width: 1200px;
+            min-height: 100vh;
             margin: 0 auto;
         }
-        main h2 {font-family: 'Teko', sans-serif;}
-        footer ul li a {color: #8D9FBA;}
-        footer ul li a:hover {color: #FFD262;}
-        footer h3 {font-family: 'Teko', sans-serif;;}
+        main h2 {font-family: var(--ff-hdr-txt);}
+        footer a {color: var(--clr-4);}
+        footer a:hover {color: var(--clr-5);}
+        footer h3 {font-family: var(--ff-hdr-txt);}
     </style>
 </head>
 <body class="bg-clr-1 has-text-grey-lighter">
     <!-- FIX THE HEADER, IT DOESN'T LOOK GOOD AT SMALLER RESOLUTIONS -->
-    <header class="p-2">
+    <header class="p-3">
         <div class="container is-fluid is-flex is-justify-content-space-between is-align-items-center flex-wrap">
-            <a href="#"><img class="logo" src="../assets/images/FInal Logo.png"></a>
-            <form id="search-bar">
-                <input id="search-input" class="is-size-5 p-2" type="text" placeholder="Search For Games" required>
-                <button id="search-button" class="is-size-5 p-2" type="submit">Search</button>
+            <a href="index.html"><img src="../assets/images/FInal Logo.png" width="300px"></a>
+            <form id="search-bar" class="is-flex is-justify-content-space-between">
+                <input id="search-input" class="input is-normal mr-2" type="text" placeholder="Search For Games" required>
+                <button id="search-button" class="button bg-clr-4" type="submit">Search</button>
             </form>
         </div>
     </header>
@@ -97,60 +96,69 @@
 
     // VARIABLES
     
-    const apiKey = "cb7fd697d0f04be5879ce9e0eb0c1473";
-    //Nav bar links
+    const rawgAPIKey = "cb7fd697d0f04be5879ce9e0eb0c1473";
     const searchBtn = document.getElementById("search-button");
     const bestDealBtn = document.getElementById("best-deals");
     const highestRatedBtn = document.getElementById("highest-rated");
     const freeGamesBtn = document.getElementById("free-games");
     const myWishlistBtn = document.getElementById("my-wishlist");
+    
     let ratedStartDate = dayjs().format("YYYY-MM-DD");
     let ratedEndDate = dayjs().subtract(1, "year").format("YYYY-MM-DD");
-
+        
     const main = document.querySelector("main");
 
     // FUNCTION DECLARATIONS
+
+    function createPageTitle(text) {
+        let pageTitle = document.createElement("div");
+        pageTitle.setAttribute("class", "pageTitle");
+        main.appendChild(pageTitle);
+        let pageTitleHdr = document.createElement("h1");
+        pageTitleHdr.setAttribute("class", "is-size-1 has-text-centered has-text-weight-bold");
+        pageTitleHdr.textContent = text;
+        pageTitle.appendChild(pageTitleHdr);
+    }
     
-    // Uses the RAWG API to search for a game and display it on the page
+    // Uses the RAWG API to search for a game and it displays relevant results on the page
     function searchGames() {
-        var search = document.getElementById("searchInput").value;
+        createPageTitle("Search Results");
+        var search = document.getElementById("search-input").value;
         let slug = search.split(" ").join("-").toLowerCase();
-        const gamesUrl = `https://api.rawg.io/api/games?key=${apiKey}&search=${slug}&platforms=18,1,7`;
+        const gamesUrl = `https://api.rawg.io/api/games?key=${rawgAPIKey}&search=${slug}&platforms=18,1,7`;
         fetch(gamesUrl)
             .then((response) => response.json())
-            .then((data) => {
-            console.log(data.results);
+            .then((data) => {            
             if (data.results.length === 0) {
                 const gameName = document.createElement("p");
                 gameName.textContent = "No results found";
-                gamesContainer.appendChild(gameName);
+                main.appendChild(gameName);
             }
             data.results.forEach((game) => {
-                const gameContainer = document.createElement("div");
-                gameContainer.classList.add("game-container");
                 let screenshots = "";
                 if (game.short_screenshots.length > 0) {
                     screenshots = game.short_screenshots[0].image;
                 }
-                gameContainer.classList.add("game-container");
-                gameContainer.innerHTML = `
-                <div class="p-5 bd">
-                <h2 class="is-size-3 has-text-weight-bold">${game.name}</h3>
-                <p>Rating: ${game.rating}</p>
-                <p>Release Date: ${game.released}</p>
-                <img src="${screenshots}" alt="">
-                </div>
-                `;
-                gamesContainer.appendChild(gameContainer);
+                const gameContainer = document.createElement("div");
+                gameContainer.setAttribute("class", "gameContainer");
+                gameContainer.innerHTML = 
+                `<div class="container is-fluid p-5 bd">
+                    <h2 class="is-size-3 has-text-weight-bold">${game.name}</h3>
+                    <p>Rating: ${game.rating}</p>
+                    <p>Release Date: ${game.released}</p>
+                    <img src="${screenshots}" alt="${game.name} cover">
+                </div>`;
+                main.appendChild(gameContainer);
             });
             })
             .catch((error) => {
-            console.error("Error:", error);
+                console.error("Error:", error);
         });
     };
 
     // Uses the Cheapshark API to fetch the best deals and display them on the page
     function fetchBestDeals() {
+        createPageTitle("Best Deals");
         const cheapsharkURL = `https://www.cheapshark.com/api/1.0/deals?storeID=1&onSale=1&pageSize=10`;
         fetch(cheapsharkURL)
             .then((response) => response.json())
@@ -164,8 +172,8 @@
                 const id = game.dealID;
                 const gameContainer = document.createElement("div");
                 gameContainer.setAttribute("class", "gameContainer");
-                gameContainer.innerHTML = `
-                <div class="container is-fluid p-5 bd">
+                gameContainer.innerHTML = 
+                `<div class="container is-fluid p-5 bd">
                     <h2 class="is-size-3 has-text-weight-bold">${gameName}</h2>
                     <p>Metacritic Score: ${metacriticScore}</p>
                     <p>Normal Price: $${normalPrice}</p>
@@ -173,8 +181,7 @@
                     <p>Deal Rating: ${dealRating}</p>
                     <a href="https://www.cheapshark.com/redirect?dealID=${id}" target="_blank" class="is-size-3">Buy Now</a>
                     <button>Add to Wishlist</button>
-                </div>
-                `;
+                </div>`;
                 main.appendChild(gameContainer);
             });
             })
@@ -185,33 +192,31 @@
 
     // Uses the RAWG API to fetch the highest rated games and display them on the page
     function fetchHighestRated() {
-        var rawgURL = `https://api.rawg.io/api/games?key=${apiKey}&metacritic&platforms=18,1,7&ordering=-metacritic`;
+        createPageTitle("Highest Rated Games");
+        var rawgURL = `https://api.rawg.io/api/games?key=${rawgAPIKey}&metacritic&platforms=18,1,7&ordering=-metacritic`;
         fetch(rawgURL)
             .then((response) => response.json())
             .then((data) => {
             var games = data.results.slice(0, 10);
-            console.log(data);
             games.forEach((game) => {
                 const gameName = game.name;
                 const metacritic = game.metacritic;
-                var playtime = game.playtime;
-                let platforms = game.platforms
+                let playtime = game.playtime;
+                let platforms = game.platforms;
                 .map((platform) => platform.platform.name)
                 .join(", ");
-                const gameContainer = document.createElement("div");
-                gameContainer.setAttribute("class", "gameContainer");
-                console.log(gameName, metacritic);
                 if (playtime === 0) {
                     playtime = "N/A";
                 }
-                gameContainer.innerHTML += `
-                <div class="container is-fluid p-5 bd">  
+                const gameContainer = document.createElement("div");
+                gameContainer.setAttribute("class", "gameContainer");
+                gameContainer.innerHTML = 
+                `<div class="container is-fluid p-5 bd">  
                     <h2 class="is-size-2 has-text-weight-bold">${gameName}</h2>
                     <p>Metacritic Score: ${metacritic}</p>
                     <p>Playtime: ${playtime} hours</p>
                     <p> Platforms: ${platforms}
-                </div>
-                `;
+                </div>`;
                 main.appendChild(gameContainer);
             });
             })
@@ -222,14 +227,15 @@
 
     // Uses the Gamerpower API to fetch free games and display them on the page
     function fetchFreeGames() {
-        // ORIGINAL CODE TAKEN FROM https://rapidapi.com/digiwalls/api/gamerpower AND MODIFIED TO WORK WITH FETCH API
+        createPageTitle("Free Games");
+        // Original code taken from https://rapidapi.com/digiwalls/api/gamerpower and modified to work with the fetch method
         const url = "https://gamerpower.p.rapidapi.com/api/filter?platform=epic-games-store.steam.android&type=game.loot";
         const options = {
             method: "GET",
             headers: {
-            "X-RapidAPI-Key": "b376f2e9e7msh1e177bc5d80ec31p1c15f4jsn146ea5790a77",
-            "X-RapidAPI-Host": "gamerpower.p.rapidapi.com",
-            },
+                "X-RapidAPI-Key": "b376f2e9e7msh1e177bc5d80ec31p1c15f4jsn146ea5790a77",
+                "X-RapidAPI-Host": "gamerpower.p.rapidapi.com",
+            }
         };
         fetch(url, options)
         .then(function (response) {
@@ -239,33 +245,49 @@
             return response.json();
             })
             .then(function (result) {
-            for (let i = 0; i < result.length; i++) {
-                var gameTitle = result[i].title;
-                var gameDescription = result[i].description;
-                var endDate = result[i].end_date;
-                var status = result[i].status;
-                var platforms = result[i].platforms;
-                var worth = result[i].worth;
-                const gameContainer = document.createElement("div");
-                gameContainer.setAttribute("class", "gameContainer");
-                gameContainer.innerHTML += `
-                    <div class="gameContainer container is-fluid p-5 bd">
+                for (let i = 0; i < result.length; i++) {
+                    var gameTitle = result[i].title;
+                    var gameDescription = result[i].description;
+                    var endDate = result[i].end_date;
+                    var status = result[i].status;
+                    var platforms = result[i].platforms;
+                    var worth = result[i].worth;
+                    const gameContainer = document.createElement("div");
+                    gameContainer.setAttribute("class", "gameContainer");
+                    gameContainer.innerHTML = 
+                    `<div class="gameContainer container is-fluid p-5 bd">
                         <h2 class="is-size-3 has-text-weight-bold">${gameTitle}</h2>
                         <p>End Date: ${endDate}</p>
                         <p>Status: ${status}</p>
                         <p>Platforms: ${platforms}</p>
                         <p>Worth: ${worth}</p>
-                    </div>
-                    `;
-                main.appendChild(gameContainer);
-            }
+                    </div>`;
+                    main.appendChild(gameContainer);
+                }
             })
-        .catch(function (error) {console.error(error)});
+        .catch(function (error){
+            console.error(error)
+        });
     };
 
     // Display's the user's wishlist that is saved in local storage
     function myWishlist() {
-
+        // This will display the user's wishlist that is saved in local storage
+            // Each item will have a button that will allow the user to remove the item from their wishlist
+            // There will be a button that will allow the user to clear their wishlist at the bottom
+        // If there is nothing in the user's wishlist, then it will display a message saying that the wishlist is empty
+        createPageTitle("My Wishlist");
+        var wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        if (wishlist.length === 0) {
+            const gameContainer = document.createElement("div");
+            gameContainer.setAttribute("class", "gameContainer");
+            gameContainer.innerHTML = 
+            `<div class="container is-fluid p-5">
+                <h2 class="is-size-3 has-text-weight-bold">Your wishlist is empty</h2>
+                <p>Search for games and add them to your wishlist</p>
+            </div>`;
+            main.appendChild(gameContainer);
+        }
     }
 
     // EVENT LISTENERS
@@ -326,6 +348,83 @@
 
     fetchBestDeals(); // ENSURES THAT THE BEST DEALS ARE DISPLAYED ON THE PAGE WHEN THE LOOT VAULT SITE FIRST LOADS
 
+// var savedWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+//     if (savedWishlist.length === 0) {
+//         wishlist.innerHTML = 
+//         `
+//         <h2 class="gameTitle">Your wishlist:</h2>
+//         <p>There are no games in your wishlist.</p>
+//         `
+//     } else {
+//         wishlist.innerHTML = `<h2 class="gameTitle">Your wishlist:</h2>`;     
+//         for (var i = 0; i < savedWishlist.length; i++) {
+//         var game = document.createElement('h3');
+//         game.setAttribute('class', 'gameTitle');
+//         game.textContent = savedWishlist[i];
+//         wishlist.appendChild(game);
+//     }
+//     }
+//     main.addEventListener('click', function(event) {
+//         if (event.target.matches('.wishlistBtn')) {
+//             //console.log('button clicked');
+//             //console.log(event.target.previousElementSibling.textContent); 
+//             savedWishlist.push(event.target.previousElementSibling.textContent); // previousElementSibling is the h2 element
+//             localStorage.setItem('wishlist', JSON.stringify(savedWishlist));
+//             //console.log(wishlist);
+//             location.reload(); // reloads the page to update the wishlist
+//         }
+//     })
+//     var clearWishlistBtn = document.getElementById('clearWishlistBtn');
+//     clearWishlistBtn.addEventListener('click', function () {
+//     localStorage.removeItem('wishlist');
+//     location.reload();
+//     });
+//   function fetchDiscounts() {
+//   const gamesUrl = `https://www.cheapshark.com/api/1.0/deals?storeID=1&onSale=1&pageSize=10`;
+//   const parentContainer = document.getElementById("games-container");
+//   const savedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+//   fetch(gamesUrl)
+//     .then(response => response.json())
+//     .then(data => {
+//       data.slice(0, 10).forEach((game) => {
+//         const gameName = game.title;
+//         const normalPrice = game.normalPrice;
+//         const salePrice = game.salePrice;
+//         const dealRating = game.dealRating;
+//         const id = game.dealID;
+//         const isInWishlist = savedWishlist.includes(game.title);
+//         const gameContainer = document.createElement("div");
+//         gameContainer.classList.add("individual-container");        
+//         gameContainer.innerHTML = `
+//           <h3>${gameName}</h3>
+//           <p>Normal Price: $${normalPrice}</p>
+//           <p>Sale Price: $${salePrice}</p>
+//           <p>Deal Rating: ${dealRating}</p>
+//           <a href="https://www.cheapshark.com/redirect?dealID=${id}" target="_blank">Buy Now</a>
+//           <button class="wishlistBtn">${isInWishlist ? "Added to Wishlist" : "Add to Wishlist"}</button>
+//           <p>-----------------------------</p>
+//         `;
+//         parentContainer.appendChild(gameContainer);
+//         const wishlistBtn = gameContainer.querySelector(".wishlistBtn");
+//         wishlistBtn.addEventListener("click", () => {
+//           if (isInWishlist) {
+//             const gameIndex = savedWishlist.indexOf(gameName);
+//             if (gameIndex > -1) {
+//               savedWishlist.splice(gameIndex, 1);
+//               wishlistBtn.textContent = "Add to Wishlist";
+//             }
+//           } else {
+//             savedWishlist.push(gameName);
+//             wishlistBtn.textContent = "Added to Wishlist";
+//           }
+//           localStorage.setItem("wishlist", JSON.stringify(savedWishlist));
+//         });
+//       });
+//     })
+//     .catch(error => {
+//       console.error('Error:', error);
+//     });
+// }
     </script>
 </body>
 </html>
