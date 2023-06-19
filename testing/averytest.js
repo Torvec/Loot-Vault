@@ -82,7 +82,7 @@ function fetchHighRated() {
           <h3>${gameName}</h3>
           <p>Metacritic Score: ${metacritic}</p>
           <p>Playtime: ${playtime} hours</p>
-          <p> Platforms: ${platforms}
+          <p> Platforms: ${platforms} </p>
 
           <p>-----------------------------</p>
         `;
