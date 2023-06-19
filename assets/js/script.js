@@ -47,7 +47,6 @@ function fetchGames() {
     });
 }
 
-fetchGames();
 
 searchBtn.addEventListener("click", function (event) {
   event.preventDefault();
