@@ -4,6 +4,8 @@ const bestDealBtn = document.getElementById("best-deals");
 const highestRatedBtn = document.getElementById("highest-rated");
 const gamesContainer = document.getElementById("games-container");
 const freeGamesBtn = document.getElementById("fg-button");
+const moreButton  = document.getElementById("more-button");
+const moreRatedBtn = document.getElementById("moreRatedBtn");
 
 fetchDiscounts();
 
@@ -133,7 +135,7 @@ function fetchFreeGames() {
       document.body.appendChild(gameList);
       gamesContainer.innerHTML = "";
 
-      for (let i = 0; i < result.length; i++) {
+      for (let i = 0;i < (result.length < 10 ? result.length : 10); i++) {
         var gameTitle = result[i].title;
         var gameDescription = result[i].description;
         var endDate = result[i].end_date;
@@ -177,3 +179,55 @@ freeGamesBtn.addEventListener("click", function (event) {
   event.preventDefault()
   fetchGames(event)
  }) */
+
+
+ function fetchHighRated() {
+  var gamesUrl = `https://api.rawg.io/api/games?key=${apiKey}&metacritic&platforms=18,1,7&ordering=-metacritic`;
+
+  fetch(gamesUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      var games = data.results.slice(0, 10);
+      console.log(data);
+
+      games.forEach((game) => {
+        const gameName = game.name;
+        const metacritic = game.metacritic;
+        var playtime = game.playtime;
+        let platforms = game.platforms
+          .map((platform) => platform.platform.name)
+          .join(", ");
+
+        const gameContainer = document.createElement("div");
+        gameContainer.classList.add("individual-container");
+
+        console.log(gameName, metacritic);
+        if (playtime === 0) {
+          playtime = "N/A";
+        }
+
+        gameContainer.innerHTML += `
+          <div class="line"></div>
+          <div class="p-5 m-5 bd">  
+          <h3 class="is-size-2 has-text-weight-bold">${gameName}</h3>
+          <p>Metacritic Score: ${metacritic}</p>
+          <p>Playtime: ${playtime} hours</p>
+          <p> Platforms: ${platforms}
+          </div>
+          <div class="line"></div>
+        `;
+        gamesContainer.appendChild(gameContainer);
+      });
+
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
+
+highestRatedBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+  gamesContainer.innerHTML = "";
+  fetchHighRated();
+});

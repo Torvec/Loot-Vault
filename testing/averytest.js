@@ -54,8 +54,11 @@
 let ratedStartDate = dayjs().format("YYYY-MM-DD");
 let ratedEndDate = dayjs().subtract(1, "year").format("YYYY-MM-DD");
 
+
+let currentPage = 1;
+
 function fetchHighRated() {
-  var gamesUrl = `https://api.rawg.io/api/games?key=${apiKey}&metacritic&platforms=18,1,7&ordering=-metacritic`;
+  var gamesUrl = `https://api.rawg.io/api/games?key=${apiKey}&metacritic&platforms=18,1,7&ordering=-metacritic&page=${currentPage}`;
 
   fetch(gamesUrl)
     .then((response) => response.json())
@@ -91,11 +94,25 @@ function fetchHighRated() {
         `;
         gamesContainer.appendChild(gameContainer);
       });
+
+      currentPage++; // Increment the page number
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 }
+
+
+highestRatedBtn.addEventListener("click", function (event) {
+  event.preventDefault();
+  gamesContainer.innerHTML = "";
+  fetchHighRated();
+});
+
+moreButton.addEventListener("click", function (event) {
+  event.preventDefault();
+  fetchHighRated();
+});
 
 highestRatedBtn.addEventListener("click", function (event) {
   event.preventDefault();
