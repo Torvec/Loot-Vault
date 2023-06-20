@@ -4,7 +4,7 @@ const bestDealBtn = document.getElementById("best-deals");
 const highestRatedBtn = document.getElementById("highest-rated");
 const gamesContainer = document.getElementById("games-container");
 const freeGamesBtn = document.getElementById("fg-button");
-const moreButton  = document.getElementById("more-button");
+const moreButton = document.getElementById("more-button");
 const moreRatedBtn = document.getElementById("moreRatedBtn");
 
 fetchDiscounts();
@@ -34,7 +34,7 @@ function fetchGames() {
         gameContainer.classList.add("game-container");
         gameContainer.innerHTML = `
           <div class="line"></div>
-          <div class="p-5 m-5 bd">
+          <div class="p-5 m-5">
           <h3 class="is-size-2 has-text-weight-bold">${game.name}</h3>
           <p>Rating: ${game.rating}</p>
           <p>Release Date: ${game.released}</p>
@@ -51,7 +51,6 @@ function fetchGames() {
       console.error("Error:", error);
     });
 }
-
 
 searchBtn.addEventListener("click", function (event) {
   event.preventDefault();
@@ -89,7 +88,7 @@ function fetchDiscounts() {
         // Create the HTML content for the game container
         gameContainer.innerHTML = `
           <div class="line"></div>
-          <div class="p-5 m-5 bd">
+          <div class="p-5 m-3">
           <h3 class="is-size-2 has-text-weight-bold">${gameName}</h3>
           <p>Metacritic Score: ${metacriticScore}</p>
           <p>Normal Price: $${normalPrice}</p>
@@ -135,7 +134,7 @@ function fetchFreeGames() {
       document.body.appendChild(gameList);
       gamesContainer.innerHTML = "";
 
-      for (let i = 0;i < (result.length < 10 ? result.length : 10); i++) {
+      for (let i = 0; i < (result.length < 10 ? result.length : 10); i++) {
         var gameTitle = result[i].title;
         var gameDescription = result[i].description;
         var endDate = result[i].end_date;
@@ -147,7 +146,7 @@ function fetchFreeGames() {
 
         gameContainer.innerHTML += `
               <div class="line"></div>
-              <div class="p-5 m-5 bd">
+              <div class="p-5 m-3">
               <h2 class="is-size-2 has-text-weight-bold">${gameTitle}</h2>
               <p>End Date: ${endDate}</p>
               <p>Status: ${status}</p>
@@ -180,8 +179,7 @@ freeGamesBtn.addEventListener("click", function (event) {
   fetchGames(event)
  }) */
 
-
- function fetchHighRated() {
+function fetchHighRated() {
   var gamesUrl = `https://api.rawg.io/api/games?key=${apiKey}&metacritic&platforms=18,1,7&ordering=-metacritic`;
 
   fetch(gamesUrl)
@@ -208,7 +206,7 @@ freeGamesBtn.addEventListener("click", function (event) {
 
         gameContainer.innerHTML += `
           <div class="line"></div>
-          <div class="p-5 m-5 bd">  
+          <div class="p-5 m-3">  
           <h3 class="is-size-2 has-text-weight-bold">${gameName}</h3>
           <p>Metacritic Score: ${metacritic}</p>
           <p>Playtime: ${playtime} hours</p>
@@ -218,13 +216,11 @@ freeGamesBtn.addEventListener("click", function (event) {
         `;
         gamesContainer.appendChild(gameContainer);
       });
-
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 }
-
 
 highestRatedBtn.addEventListener("click", function (event) {
   event.preventDefault();

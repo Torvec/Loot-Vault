@@ -54,7 +54,6 @@
 let ratedStartDate = dayjs().format("YYYY-MM-DD");
 let ratedEndDate = dayjs().subtract(1, "year").format("YYYY-MM-DD");
 
-
 let currentPage = 1;
 
 function fetchHighRated() {
@@ -84,7 +83,7 @@ function fetchHighRated() {
 
         gameContainer.innerHTML += `
           <div class="line"></div>
-          <div class="p-5 m-5 bd">  
+          <div class="p-5 m-5">  
           <h3 class="is-size-2 has-text-weight-bold">${gameName}</h3>
           <p>Metacritic Score: ${metacritic}</p>
           <p>Playtime: ${playtime} hours</p>
@@ -101,7 +100,6 @@ function fetchHighRated() {
       console.error("Error:", error);
     });
 }
-
 
 highestRatedBtn.addEventListener("click", function (event) {
   event.preventDefault();
