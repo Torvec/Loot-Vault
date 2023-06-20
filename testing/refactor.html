@@ -32,8 +32,8 @@
         .navbar-brand a:hover {color: var(--clr-5);}
         main {min-height: 100vh;}
         main h2 {font-family: var(--ff-hdr-txt);}
-        footer a {color: var(--clr-4);}
-        footer a:hover {color: var(--clr-5);}
+        footer section a {color: var(--clr-4);}
+        footer section a:hover {color: var(--clr-5);}
         footer h3 {font-family: var(--ff-hdr-txt);}
     </style>
 </head>
@@ -129,8 +129,6 @@
     const freeGamesBtn = document.getElementById("free-games");
     const myWishlistBtn = document.getElementById("my-wishlist");
 
-   
-    
     let ratedStartDate = dayjs().format("YYYY-MM-DD");
     let ratedEndDate = dayjs().subtract(1, "year").format("YYYY-MM-DD");
         
@@ -141,46 +139,89 @@
     function createPageTitle(text) {
         let hero = document.createElement("section");
         hero.setAttribute("class", "hero is-medium bg-clr-1");
+        hero.innerHTML = 
+        `
+        <div class = "hero-body">
+            <h1 class = "is-size-1 has-text-centered has-text-weight-bold">${text}</h1>
+        </div>
+        `;
         main.appendChild(hero);
-        let heroBody = document.createElement("div");
-        heroBody.setAttribute("class", "hero-body");
-        hero.appendChild(heroBody);
-        let heroBodyText = document.createElement("h1");
-        heroBodyText.setAttribute("class", "is-size-1 has-text-centered has-text-weight-bold");
-        heroBodyText.textContent = text;
-        heroBody.appendChild(heroBodyText);
     }
     
-    // Uses the RAWG API to search for a game and it displays relevant results on the page
+    // Uses the RAWG API to search for a game and displays relevant results on the page
     function searchGames() {
         createPageTitle("Search Results");
         var search = document.getElementById("search-input").value;
         let slug = search.split(" ").join("-").toLowerCase();
-        const gamesUrl = `https://api.rawg.io/api/games?key=${rawgAPIKey}&search=${slug}&platforms=18,1,7`;
-        fetch(gamesUrl)
-            .then((response) => response.json())
-            .then((data) => {            
-            if (data.results.length === 0) {
-                const gameName = document.createElement("p");
-                gameName.textContent = "No results found";
-                main.appendChild(gameName);
-            }
-            data.results.forEach((game) => {
-                let screenshots = "";
-                if (game.short_screenshots.length > 0) {
-                    screenshots = game.short_screenshots[0].image;
+        const searchGamesURL = `https://api.rawg.io/api/games?key=${rawgAPIKey}&search=${slug}&platforms=18,1,7`;
+        fetch(searchGamesURL)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
                 }
+                return response.json();
+                })
+            .then((data) => {            
+                if (data.results.length === 0) {
+                    const gameContainer = document.createElement("div");
+                    gameContainer.setAttribute("class", "container is-widescreen p-5");
+                    gameContainer.innerHTML = 
+                    `
+                    <p class="is-size-4">No results found</p>
+                    `;
+                    main.appendChild(gameContainer);
+                }
+                const container = document.createElement("div");
+                container.setAttribute("class", "container is-widescreen p-5");
                 const gameContainer = document.createElement("div");
-                gameContainer.setAttribute("class", "gameContainer");
-                gameContainer.innerHTML = 
-                `<div class="container is-fluid p-5 bd">
-                    <h2 class="is-size-3 has-text-weight-bold">${game.name}</h3>
-                    <p>Rating: ${game.rating}</p>
-                    <p>Release Date: ${game.released}</p>
-                    <img src="${screenshots}" alt="${game.name} cover">
-                </div>`;
-                main.appendChild(gameContainer);
-            });
+                gameContainer.setAttribute("class", "columns is-multiline");
+                data.results.forEach((game) => {
+                    const gameName = game.name;
+                    const metacritic = game.metacritic;
+                    let playtime = game.playtime;
+                    let platforms = game.platforms.map((platform) => platform.platform.name).join(", ");
+                    if(!metacritic) {
+                        metacritic = "N/A";
+                    }
+                    if (playtime === 0) {
+                        playtime = "N/A";
+                    } else {
+                        playtime = `${playtime} hours`;
+                    }
+                    let screenshots = "";
+                        if (game.short_screenshots.length > 0) {
+                            screenshots = game.short_screenshots[0].image;
+                        }
+                    gameContainer.innerHTML += 
+                    `
+                    <div class="column is-one-third">
+                        <div class="card has-background-grey-lighter">
+                            <header class="card-header">
+                                <h2 class="card-header-title is-size-3">${gameName}</h2>
+                            </header>
+                            <div class="card-image">
+                                <figure class="image">
+                                    <img src="${screenshots}" alt="${gameName} screenshot">
+                                </figure>
+                            </div>
+                            <div class="card-content">
+                                <div class="content">
+                                    <p class="subtitle">Platforms:<br> ${platforms}</p>
+                                </div>
+                            </div>
+                            <footer class="card-footer">
+                                <p class="card-footer-item">Metacritic Score: ${metacritic}</p>
+                                <p class="card-footer-item">Playtime: ${playtime}</p>
+                            </footer>
+                            <footer class="card-footer">
+                                <p class="card-footer-item"><button class="wishlist-button button">Add to Wishlist</button></p>
+                            </footer>
+                        </div>
+                    </div>
+                    `;
+                    container.appendChild(gameContainer);
+                    main.appendChild(container);
+                });
             })
             .catch((error) => {
                 console.error("Error:", error);
@@ -190,41 +231,65 @@
     // Uses the Cheapshark API to fetch the best deals and display them on the page
     function fetchBestDeals() {
         createPageTitle("Best Deals");
-        const cheapsharkURL = `https://www.cheapshark.com/api/1.0/deals?storeID=1&onSale=1&pageSize=10`;
+        const cheapsharkURL = `https://www.cheapshark.com/api/1.0/deals?storeID=1&onSale=1&pageSize=20`;
         fetch(cheapsharkURL)
-            .then((response) => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+                })
             .then((data) => {
-
                 const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-
-                data.slice(0, 10).forEach((game) => {
+                const container = document.createElement("div");
+                container.setAttribute("class", "container is-widescreen p-5");
+                const gameContainer = document.createElement("div");
+                gameContainer.setAttribute("class", "columns is-multiline");
+                data.slice(0, 20).forEach((game) => {
                     const gameName = game.title;
+                    const screenshots = game.thumb;
                     const normalPrice = game.normalPrice;
                     const salePrice = game.salePrice;
                     const dealRating = game.dealRating;
                     const metacriticScore = game.metacriticScore;
                     const id = game.dealID;
-
-                    const gameContainer = document.createElement("div");
-                    gameContainer.setAttribute("class", "gameContainer");
-                    gameContainer.innerHTML = 
-                    `<div class="container is-widescreen p-5">
-                        <h2 class="is-size-3 has-text-weight-bold">${gameName}</h2>
-                        <p>Metacritic Score: ${metacriticScore}</p>
-                        <p>Normal Price: $${normalPrice}</p>
-                        <p>Sale Price: $${salePrice}</p>
-                        <p>Deal Rating: ${dealRating}</p>
-                        <a href="https://www.cheapshark.com/redirect?dealID=${id}" target="_blank" class="is-size-3">Buy Now</a>
-                        <button class="wishlist-button">Add to Wishlist</button>
-                    </div>`;
-                    main.appendChild(gameContainer);
-
+                    gameContainer.innerHTML += 
+                    `
+                    <div class="column is-one-third">
+                        <div class="card has-background-grey-lighter">
+                            <header class="card-header">
+                                <h2 class="card-header-title is-size-3">${gameName}</h2>
+                            </header>
+                            <div class="card-image">
+                                <figure class="image">
+                                    <img src="${screenshots}" alt="${gameName} screenshot">
+                                </figure>
+                            </div>
+                            <div class="card-content">
+                                <div class="content">
+                                    <p class="subtitle">Metacrictic Score:<br> ${metacriticScore}</p>
+                                </div>
+                            <footer class="card-footer">
+                                <p class="card-footer-item">Sale Price:<br> ${salePrice}</p>
+                                <p class="card-footer-item">Normal Price:<br> ${normalPrice}</p>
+                                <p class="card-footer-item">Deal Rating:<br> ${dealRating}</p>
+                            </footer>
+                            <footer class="card-footer">
+                                <p class="card-footer-item"><button class="button is-warning"><a href="https://www.cheapshark.com/redirect?dealID=${id}" target="_blank">Buy Now</a></button></p>
+                                <p class="card-footer-item"><button class="wishlist-button button">Add to Wishlist</button></p>
+                            </footer>
+                        </div>
+                    </div>
+                    `;
+                    container.appendChild(gameContainer);
+                    main.appendChild(container);
                     const wishlistButton = gameContainer.querySelector('.wishlist-button');
                     // Check if the game is already in the wishlist
                     if (wishlist.includes(gameName)) {
                         wishlistButton.textContent = 'Item Added!';
                         wishlistButton.disabled = true;
                     }
+                    // Add the game to the wishlist if it isn't already in it
                     wishlistButton.addEventListener('click', () => {
                         addToWishlist(gameName, wishlistButton);
                     });
@@ -240,28 +305,62 @@
         createPageTitle("Highest Rated");
         var rawgURL = `https://api.rawg.io/api/games?key=${rawgAPIKey}&metacritic&platforms=18,1,7&ordering=-metacritic`;
         fetch(rawgURL)
-            .then((response) => response.json())
-            .then((data) => {
-            var games = data.results.slice(0, 10);
-            games.forEach((game) => {
-                const gameName = game.name;
-                const metacritic = game.metacritic;
-                let playtime = game.playtime;
-                let platforms = game.platforms.map((platform) => platform.platform.name).join(", ");
-                if (playtime === 0) {
-                    playtime = "N/A";
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
                 }
+                return response.json();
+                })
+            .then((data) => {
+                const container = document.createElement("div");
+                container.setAttribute("class", "container is-widescreen p-5");
                 const gameContainer = document.createElement("div");
-                gameContainer.setAttribute("class", "gameContainer");
-                gameContainer.innerHTML = 
-                `<div class="container is-widescreen p-5">  
-                    <h2 class="is-size-2 has-text-weight-bold">${gameName}</h2>
-                    <p>Metacritic Score: ${metacritic}</p>
-                    <p>Playtime: ${playtime} hours</p>
-                    <p> Platforms: ${platforms}
-                </div>`;
-                main.appendChild(gameContainer);
-            });
+                gameContainer.setAttribute("class", "columns is-multiline");
+                var games = data.results.slice(0, 20);
+                games.forEach((game) => {
+                    const gameName = game.name;
+                    const metacritic = game.metacritic;
+                    let playtime = game.playtime;
+                    let platforms = game.platforms.map((platform) => platform.platform.name).join(", ");
+                    if (playtime === 0) {
+                        playtime = "N/A";
+                    } else {
+                        playtime = `${playtime} hours`;
+                    }
+                    let screenshots = "";
+                        if (game.short_screenshots.length > 0) {
+                            screenshots = game.short_screenshots[0].image;
+                        }
+                    gameContainer.innerHTML += 
+                    `
+                    <div class="column is-one-third">
+                        <div class="card has-background-grey-lighter">
+                            <header class="card-header">
+                                <h2 class="card-header-title is-size-3">${gameName}</h2>
+                            </header>
+                            <div class="card-image">
+                                <figure class="image">
+                                    <img src="${screenshots}" alt="${gameName} screenshot">
+                                </figure>
+                            </div>
+                            <div class="card-content">
+                                <div class="content">
+                                    <p class="subtitle">Platforms:<br> ${platforms}</p>
+                                </div>
+                            </div>
+                            <footer class="card-footer">
+                                <p class="card-footer-item">Metacritic Score: ${metacritic}</p>
+                                <p class="card-footer-item">Playtime: ${playtime}</p>
+                            </footer>
+                            <footer class="card-footer">
+                                <p class="card-footer-item"><button class="wishlist-button button">Add to Wishlist</button></p>
+                            </footer>
+                        </div>
+                    </div>
+                    `;
+                    container.appendChild(gameContainer);
+                    main.appendChild(container);
+                });
             })
         .catch((error) => {
             console.error("Error:", error);
@@ -294,7 +393,8 @@
                 gameContainer.setAttribute("class", "columns is-multiline");
                 for (let i = 0; i < result.length; i++) {
                     var gameTitle = result[i].title;
-                    var gameDescription = result[i].description;
+                    var screenshots = result[i].thumbnail;
+                    var giveawayURL = result[i].open_giveaway_url;
                     var endDate = result[i].end_date;
                     var formatEndDate = dayjs(endDate).format("MMMM D, YYYY");
                     if (formatEndDate === "Invalid Date") {
@@ -305,20 +405,28 @@
                     var worth = result[i].worth;
                     gameContainer.innerHTML += 
                     `
-                    <div class="column is-one-quarter">
+                    <div class="column is-one-third">
                         <div class="card has-background-grey-lighter">
                             <header class="card-header">
-                                <p class="card-header-title">${gameTitle}</p>
+                                <h2 class="card-header-title is-size-3">${gameTitle}</h2>
                             </header>
+                            <div class="card-image">
+                                <figure class="image">
+                                    <img src="${screenshots}" alt="${gameTitle} screenshot">
+                                </figure>
+                            </div>
                             <div class="card-content">
                                 <div class="content">
                                     <p class="subtitle">Platforms: ${platforms}</p>
-                                    <p>Worth: ${worth}</p>
                                 </div>
                             </div>
                             <footer class="card-footer">
-                                <p class="card-footer-item">End Date:<br>${formatEndDate}</p>
-                                <p class="card-footer-item">Status:<br>${status}</p>
+                                <p class="card-footer-item">Worth<br>${worth}</p>
+                                <p class="card-footer-item">End Date<br>${formatEndDate}</p>
+                                <p class="card-footer-item">Status<br>${status}</p>
+                            </footer>
+                            <footer class="card-footer">
+                                <p class="card-footer-item"><button class="button is-warning"><a href="${giveawayURL}" target="_blank">Get Giveaway!</a></button></p>
                             </footer>
                         </div>
                     </div>
@@ -338,41 +446,53 @@
         var wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
         if (wishlist.length === 0) {
             const gameContainer = document.createElement("div");
-            gameContainer.setAttribute("class", "gameContainer");
+            gameContainer.setAttribute("class", "container is-widescreen p-5");
             gameContainer.innerHTML = 
-            `<div class="container is-widescreen p-5">
-                <h2 class="is-size-3 has-text-weight-bold">Your wishlist is empty</h2>
-                <p>Search for games and add them to your wishlist</p>
-            </div>`;
+            `
+            <h2 class="is-size-3 has-text-weight-bold">Your wishlist is empty</h2>
+            <p>Search for games and add them to your wishlist</p>
+            `;
             main.appendChild(gameContainer);
         } else {
             const gameContainer = document.createElement("div");
-            gameContainer.setAttribute("class", "gameContainer");
+            gameContainer.setAttribute("class", "container is-widescreen p-5");
             for (let i = 0; i < wishlist.length; i++) {
                 gameContainer.innerHTML += 
-                `<div class="container is-widescreen p-5">
-                    <h2 class="is-size-3 has-text-weight-bold">${wishlist[i]}</h2>
-                    <button class="button is-danger is-light" id="removeBtn">Remove</button>
-                </div>`;
+                `
+                <h2 class="is-size-3 has-text-weight-bold">${wishlist[i]}</h2>
+                <button class="button is-danger remove-button">Remove</button>
+                `;
                 main.appendChild(gameContainer);
             }
         }
     };
 
+    // Adds the gameName to the user's wishlist in local storage
     function addToWishlist(gameName, wishlistButton) {
-        const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];// Retrieve existing wishlist from local storage
-        if (wishlist.includes(gameName)) {// If the gameName is already in the wishlist, then return
+        // Retrieve existing wishlist from local storage or create an empty array
+        const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        // If the gameName is already in the wishlist, disable the button and return
+        if (wishlist.includes(gameName)) {
             wishlistButton.textContent = "Game Added!";
             wishlistButton.disabled = true;
             return;
         }
-        wishlist.push(gameName);// Add the gameName to the wishlist
-        localStorage.setItem('wishlist', JSON.stringify(wishlist));// Update the wishlist in local storage
+        // Add the gameName to the wishlist
+        wishlist.push(gameName);
+        // Update the wishlist in local storage
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        // Disable the button to prevent the user from adding the same game multiple times
         wishlistButton.textContent = "Item Added";
         wishlistButton.disabled = true;
     }
 
+    function removeFromWishlist() {
+        
+    }
+
+
     // EVENT LISTENERS
+
 
     // Is used to search for games when the search button is clicked
     searchBtn.addEventListener('click', function(event) {
@@ -409,21 +529,12 @@
         myWishlist(event);
     });
 
-    // Will be used to remove a game from the user's wishlist when the remove from wishlist button is clicked
-    // removeFromWishlistBtn.addEventListener("click", function (event) {
-    //     event.preventDefault();
-    // });
-
-    // Will be used to clear the wishlist when the clear wishlist button is clicked
-    // clearWishlistBtn.addEventListener("click", function (event) {
-    //     event.preventDefault();
-    // });
-
 
     // FUNCTION CALLS
 
 
-    fetchBestDeals(); // ENSURES THAT THE BEST DEALS ARE DISPLAYED ON THE PAGE WHEN THE LOOT VAULT SITE FIRST LOADS
+    fetchBestDeals(); // Show best deals on page load
+
 
     </script>
 </body>
