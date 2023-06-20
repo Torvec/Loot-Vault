@@ -23,15 +23,14 @@
         .bg-clr-2 {background: var(--clr-2);}
         .bg-clr-3 {background: var(--clr-3);}
         .bg-clr-4 {background: var(--clr-5);}
+        .txt-clr-pri {color: var(--clr-4);}
+        .txt-clr-sec {color: var(--clr-5);}
         body {font-family: var(--ff-main-txt);}
         nav {font-family: var(--ff-hdr-txt);}
-        nav ul li a {color: var(--clr-4);}
-        nav ul li a:hover {color: var(--clr-5);}
-        main {
-            max-width: 1200px;
-            min-height: 100vh;
-            margin: 0 auto;
-        }
+        .navbar-item {color: var(--clr-4);}
+        .navbar-menu .navbar-start .navbar-item:hover {background-color: var(--clr-2); color: var(--clr-5);}
+        .navbar-brand a:hover {color: var(--clr-5);}
+        main {min-height: 100vh;}
         main h2 {font-family: var(--ff-hdr-txt);}
         footer a {color: var(--clr-4);}
         footer a:hover {color: var(--clr-5);}
@@ -39,28 +38,38 @@
     </style>
 </head>
 <body class="bg-clr-1 has-text-grey-lighter">
-    <!-- FIX THE HEADER, IT DOESN'T LOOK GOOD AT SMALLER RESOLUTIONS -->
-    <header class="p-3">
-        <div class="container is-fluid is-flex is-justify-content-space-between is-align-items-center flex-wrap">
-            <a href="index.html"><img src="../assets/images/FInal Logo.png" width="300px"></a>
-            <form id="search-bar" class="is-flex is-justify-content-space-between">
-                <input id="search-input" class="input is-normal mr-2" type="text" placeholder="Search For Games" required>
-                <button id="search-button" class="button bg-clr-4" type="submit">Search</button>
-            </form>
-        </div>
+    <header>
+        <!-- Bulma's basic navbar implementation with some customization -->
+        <nav class="navbar is-transparent bg-clr-2 p-2" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a href="index.html"><img src="../assets/images/FInal Logo.png" width="300px"></a>
+                <!-- Hidden until screen size is small -->
+                <a role="button" class="navbar-burger txt-clr-pri" data-target="navMenu" aria-label="menu" aria-expanded="false">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <div class="navbar-menu bg-clr-2" id="navMenu">
+                <div class="navbar-start mx-auto">
+                    <a id="best-deals" class="navbar-item is-size-3">Best Deals</a>
+                    <a id="highest-rated" class="navbar-item is-size-3">Highest Rated</a>
+                    <a id="free-games" class="navbar-item is-size-3">Free Games</a>
+                    <a id="my-wishlist" class="navbar-item is-size-3">My Wishlist</a>
+                </div>
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <form id="search-bar" class="is-flex is-justify-content-space-between">
+                            <input id="search-input" class="input is-normal mr-2" type="text" placeholder="Search For Games" required>
+                            <button id="search-button" class="button bg-clr-4" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </header>
-    <nav class="container is-fluid bg-clr-2">
-        <ul class="is-flex is-justify-content-space-evenly p-2">
-            <li><a id="best-deals" class="is-size-3" >Best Deals</a></li>
-            <li><a id="highest-rated" class="is-size-3">Highest Rated</a></li>
-            <li><a id="free-games" class="is-size-3">Free Games</a></li>
-            <li><a id="my-wishlist" class="is-size-3">My Wishlist</a></li>
-        </ul>
-    </nav>
     <main class="bg-clr-3">
-
         <!-- DYNAMIC GENERATED CONTENT HERE -->
-
     </main>
     <footer class="footer bg-clr-2">
         <div class="container is-fluid columns">
@@ -93,6 +102,23 @@
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js" integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
     <script>
+    
+    // Bulma's Navbar Burger Menu implementation from https://bulma.io/documentation/components/navbar/
+    document.addEventListener('DOMContentLoaded', () => {
+        // Get all "navbar-burger" elements
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+        // Add a click event on each of them
+        $navbarBurgers.forEach( el => {
+            el.addEventListener('click', () => {
+                // Get the target from the "data-target" attribute
+                const target = el.dataset.target;
+                const $target = document.getElementById(target);
+                // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                el.classList.toggle('is-active');
+                $target.classList.toggle('is-active');
+            });
+        });
+    });
 
     // VARIABLES
     
@@ -111,13 +137,16 @@
     // FUNCTION DECLARATIONS
 
     function createPageTitle(text) {
-        let pageTitle = document.createElement("div");
-        pageTitle.setAttribute("class", "pageTitle");
-        main.appendChild(pageTitle);
-        let pageTitleHdr = document.createElement("h1");
-        pageTitleHdr.setAttribute("class", "is-size-1 has-text-centered has-text-weight-bold");
-        pageTitleHdr.textContent = text;
-        pageTitle.appendChild(pageTitleHdr);
+        let hero = document.createElement("section");
+        hero.setAttribute("class", "hero is-medium bg-clr-1");
+        main.appendChild(hero);
+        let heroBody = document.createElement("div");
+        heroBody.setAttribute("class", "hero-body");
+        hero.appendChild(heroBody);
+        let heroBodyText = document.createElement("h1");
+        heroBodyText.setAttribute("class", "is-size-1 has-text-centered has-text-weight-bold");
+        heroBodyText.textContent = text;
+        heroBody.appendChild(heroBodyText);
     }
     
     // Uses the RAWG API to search for a game and it displays relevant results on the page
@@ -173,7 +202,7 @@
                 const gameContainer = document.createElement("div");
                 gameContainer.setAttribute("class", "gameContainer");
                 gameContainer.innerHTML = 
-                `<div class="container is-fluid p-5 bd">
+                `<div class="container is-widescreen p-5">
                     <h2 class="is-size-3 has-text-weight-bold">${gameName}</h2>
                     <p>Metacritic Score: ${metacriticScore}</p>
                     <p>Normal Price: $${normalPrice}</p>
@@ -192,7 +221,7 @@
 
     // Uses the RAWG API to fetch the highest rated games and display them on the page
     function fetchHighestRated() {
-        createPageTitle("Highest Rated Games");
+        createPageTitle("Highest Rated");
         var rawgURL = `https://api.rawg.io/api/games?key=${rawgAPIKey}&metacritic&platforms=18,1,7&ordering=-metacritic`;
         fetch(rawgURL)
             .then((response) => response.json())
@@ -202,16 +231,14 @@
                 const gameName = game.name;
                 const metacritic = game.metacritic;
                 let playtime = game.playtime;
-                let platforms = game.platforms;
-                .map((platform) => platform.platform.name)
-                .join(", ");
+                let platforms = game.platforms.map((platform) => platform.platform.name).join(", ");
                 if (playtime === 0) {
                     playtime = "N/A";
                 }
                 const gameContainer = document.createElement("div");
                 gameContainer.setAttribute("class", "gameContainer");
                 gameContainer.innerHTML = 
-                `<div class="container is-fluid p-5 bd">  
+                `<div class="container is-widescreen p-5">  
                     <h2 class="is-size-2 has-text-weight-bold">${gameName}</h2>
                     <p>Metacritic Score: ${metacritic}</p>
                     <p>Playtime: ${playtime} hours</p>
@@ -255,7 +282,7 @@
                     const gameContainer = document.createElement("div");
                     gameContainer.setAttribute("class", "gameContainer");
                     gameContainer.innerHTML = 
-                    `<div class="gameContainer container is-fluid p-5 bd">
+                    `<div class="container is-widescreen p-5">
                         <h2 class="is-size-3 has-text-weight-bold">${gameTitle}</h2>
                         <p>End Date: ${endDate}</p>
                         <p>Status: ${status}</p>
@@ -282,13 +309,15 @@
             const gameContainer = document.createElement("div");
             gameContainer.setAttribute("class", "gameContainer");
             gameContainer.innerHTML = 
-            `<div class="container is-fluid p-5">
+            `<div class="container is-widescreen p-5">
                 <h2 class="is-size-3 has-text-weight-bold">Your wishlist is empty</h2>
                 <p>Search for games and add them to your wishlist</p>
             </div>`;
             main.appendChild(gameContainer);
+        } else {
+            return; // This will display the user's wishlist
         }
-    }
+    };
 
     // EVENT LISTENERS
 
