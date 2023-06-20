@@ -52,9 +52,9 @@
             </div>
             <div class="navbar-menu bg-clr-2" id="navMenu">
                 <div class="navbar-start mx-auto">
-                    <a id="best-deals" class="navbar-item is-size-3">Best Deals</a>
-                    <a id="highest-rated" class="navbar-item is-size-3">Highest Rated</a>
-                    <a id="free-games" class="navbar-item is-size-3">Free Games</a>
+                    <a id="best-deals" class="navbar-item is-size-3 mr-6">Best Deals</a>
+                    <a id="highest-rated" class="navbar-item is-size-3 mr-6">Highest Rated</a>
+                    <a id="free-games" class="navbar-item is-size-3 mr-6">Free Games</a>
                     <a id="my-wishlist" class="navbar-item is-size-3">My Wishlist</a>
                 </div>
                 <div class="navbar-end">
@@ -128,6 +128,8 @@
     const highestRatedBtn = document.getElementById("highest-rated");
     const freeGamesBtn = document.getElementById("free-games");
     const myWishlistBtn = document.getElementById("my-wishlist");
+
+   
     
     let ratedStartDate = dayjs().format("YYYY-MM-DD");
     let ratedEndDate = dayjs().subtract(1, "year").format("YYYY-MM-DD");
@@ -192,27 +194,41 @@
         fetch(cheapsharkURL)
             .then((response) => response.json())
             .then((data) => {
-            data.slice(0, 10).forEach((game) => {
-                const gameName = game.title;
-                const normalPrice = game.normalPrice;
-                const salePrice = game.salePrice;
-                const dealRating = game.dealRating;
-                const metacriticScore = game.metacriticScore;
-                const id = game.dealID;
-                const gameContainer = document.createElement("div");
-                gameContainer.setAttribute("class", "gameContainer");
-                gameContainer.innerHTML = 
-                `<div class="container is-widescreen p-5">
-                    <h2 class="is-size-3 has-text-weight-bold">${gameName}</h2>
-                    <p>Metacritic Score: ${metacriticScore}</p>
-                    <p>Normal Price: $${normalPrice}</p>
-                    <p>Sale Price: $${salePrice}</p>
-                    <p>Deal Rating: ${dealRating}</p>
-                    <a href="https://www.cheapshark.com/redirect?dealID=${id}" target="_blank" class="is-size-3">Buy Now</a>
-                    <button>Add to Wishlist</button>
-                </div>`;
-                main.appendChild(gameContainer);
-            });
+
+                const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+
+                data.slice(0, 10).forEach((game) => {
+                    const gameName = game.title;
+                    const normalPrice = game.normalPrice;
+                    const salePrice = game.salePrice;
+                    const dealRating = game.dealRating;
+                    const metacriticScore = game.metacriticScore;
+                    const id = game.dealID;
+
+                    const gameContainer = document.createElement("div");
+                    gameContainer.setAttribute("class", "gameContainer");
+                    gameContainer.innerHTML = 
+                    `<div class="container is-widescreen p-5">
+                        <h2 class="is-size-3 has-text-weight-bold">${gameName}</h2>
+                        <p>Metacritic Score: ${metacriticScore}</p>
+                        <p>Normal Price: $${normalPrice}</p>
+                        <p>Sale Price: $${salePrice}</p>
+                        <p>Deal Rating: ${dealRating}</p>
+                        <a href="https://www.cheapshark.com/redirect?dealID=${id}" target="_blank" class="is-size-3">Buy Now</a>
+                        <button class="wishlist-button">Add to Wishlist</button>
+                    </div>`;
+                    main.appendChild(gameContainer);
+
+                    const wishlistButton = gameContainer.querySelector('.wishlist-button');
+                    // Check if the game is already in the wishlist
+                    if (wishlist.includes(gameName)) {
+                        wishlistButton.textContent = 'Item Added!';
+                        wishlistButton.disabled = true;
+                    }
+                    wishlistButton.addEventListener('click', () => {
+                        addToWishlist(gameName, wishlistButton);
+                    });
+                });
             })
         .catch((error) => {
             console.error("Error:", error);
@@ -256,7 +272,7 @@
     function fetchFreeGames() {
         createPageTitle("Free Games");
         // Original code taken from https://rapidapi.com/digiwalls/api/gamerpower and modified to work with the fetch method
-        const url = "https://gamerpower.p.rapidapi.com/api/filter?platform=epic-games-store.steam.android&type=game.loot";
+        const url = "https://gamerpower.p.rapidapi.com/api/giveaways";
         const options = {
             method: "GET",
             headers: {
@@ -272,25 +288,44 @@
             return response.json();
             })
             .then(function (result) {
+                const container = document.createElement("div");
+                container.setAttribute("class", "container is-widescreen p-5");
+                const gameContainer = document.createElement("div");
+                gameContainer.setAttribute("class", "columns is-multiline");
                 for (let i = 0; i < result.length; i++) {
                     var gameTitle = result[i].title;
                     var gameDescription = result[i].description;
                     var endDate = result[i].end_date;
+                    var formatEndDate = dayjs(endDate).format("MMMM D, YYYY");
+                    if (formatEndDate === "Invalid Date") {
+                        formatEndDate = "N/A";
+                    }
                     var status = result[i].status;
                     var platforms = result[i].platforms;
                     var worth = result[i].worth;
-                    const gameContainer = document.createElement("div");
-                    gameContainer.setAttribute("class", "gameContainer");
-                    gameContainer.innerHTML = 
-                    `<div class="container is-widescreen p-5">
-                        <h2 class="is-size-3 has-text-weight-bold">${gameTitle}</h2>
-                        <p>End Date: ${endDate}</p>
-                        <p>Status: ${status}</p>
-                        <p>Platforms: ${platforms}</p>
-                        <p>Worth: ${worth}</p>
-                    </div>`;
-                    main.appendChild(gameContainer);
+                    gameContainer.innerHTML += 
+                    `
+                    <div class="column is-one-quarter">
+                        <div class="card has-background-grey-lighter">
+                            <header class="card-header">
+                                <p class="card-header-title">${gameTitle}</p>
+                            </header>
+                            <div class="card-content">
+                                <div class="content">
+                                    <p class="subtitle">Platforms: ${platforms}</p>
+                                    <p>Worth: ${worth}</p>
+                                </div>
+                            </div>
+                            <footer class="card-footer">
+                                <p class="card-footer-item">End Date:<br>${formatEndDate}</p>
+                                <p class="card-footer-item">Status:<br>${status}</p>
+                            </footer>
+                        </div>
+                    </div>
+                    `;
                 }
+                container.appendChild(gameContainer);
+                main.appendChild(container);
             })
         .catch(function (error){
             console.error(error)
@@ -299,10 +334,6 @@
 
     // Display's the user's wishlist that is saved in local storage
     function myWishlist() {
-        // This will display the user's wishlist that is saved in local storage
-            // Each item will have a button that will allow the user to remove the item from their wishlist
-            // There will be a button that will allow the user to clear their wishlist at the bottom
-        // If there is nothing in the user's wishlist, then it will display a message saying that the wishlist is empty
         createPageTitle("My Wishlist");
         var wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
         if (wishlist.length === 0) {
@@ -315,9 +346,31 @@
             </div>`;
             main.appendChild(gameContainer);
         } else {
-            return; // This will display the user's wishlist
+            const gameContainer = document.createElement("div");
+            gameContainer.setAttribute("class", "gameContainer");
+            for (let i = 0; i < wishlist.length; i++) {
+                gameContainer.innerHTML += 
+                `<div class="container is-widescreen p-5">
+                    <h2 class="is-size-3 has-text-weight-bold">${wishlist[i]}</h2>
+                    <button class="button is-danger is-light" id="removeBtn">Remove</button>
+                </div>`;
+                main.appendChild(gameContainer);
+            }
         }
     };
+
+    function addToWishlist(gameName, wishlistButton) {
+        const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];// Retrieve existing wishlist from local storage
+        if (wishlist.includes(gameName)) {// If the gameName is already in the wishlist, then return
+            wishlistButton.textContent = "Game Added!";
+            wishlistButton.disabled = true;
+            return;
+        }
+        wishlist.push(gameName);// Add the gameName to the wishlist
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));// Update the wishlist in local storage
+        wishlistButton.textContent = "Item Added";
+        wishlistButton.disabled = true;
+    }
 
     // EVENT LISTENERS
 
@@ -356,11 +409,6 @@
         myWishlist(event);
     });
 
-    // Will be used to add a game to the user's wishlist when the add to wishlist button is clicked
-    // addToWishListBtn.addEventListener("click", function (event) {
-    //     event.preventDefault();
-    // });
-
     // Will be used to remove a game from the user's wishlist when the remove from wishlist button is clicked
     // removeFromWishlistBtn.addEventListener("click", function (event) {
     //     event.preventDefault();
@@ -377,83 +425,6 @@
 
     fetchBestDeals(); // ENSURES THAT THE BEST DEALS ARE DISPLAYED ON THE PAGE WHEN THE LOOT VAULT SITE FIRST LOADS
 
-// var savedWishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-//     if (savedWishlist.length === 0) {
-//         wishlist.innerHTML = 
-//         `
-//         <h2 class="gameTitle">Your wishlist:</h2>
-//         <p>There are no games in your wishlist.</p>
-//         `
-//     } else {
-//         wishlist.innerHTML = `<h2 class="gameTitle">Your wishlist:</h2>`;     
-//         for (var i = 0; i < savedWishlist.length; i++) {
-//         var game = document.createElement('h3');
-//         game.setAttribute('class', 'gameTitle');
-//         game.textContent = savedWishlist[i];
-//         wishlist.appendChild(game);
-//     }
-//     }
-//     main.addEventListener('click', function(event) {
-//         if (event.target.matches('.wishlistBtn')) {
-//             //console.log('button clicked');
-//             //console.log(event.target.previousElementSibling.textContent); 
-//             savedWishlist.push(event.target.previousElementSibling.textContent); // previousElementSibling is the h2 element
-//             localStorage.setItem('wishlist', JSON.stringify(savedWishlist));
-//             //console.log(wishlist);
-//             location.reload(); // reloads the page to update the wishlist
-//         }
-//     })
-//     var clearWishlistBtn = document.getElementById('clearWishlistBtn');
-//     clearWishlistBtn.addEventListener('click', function () {
-//     localStorage.removeItem('wishlist');
-//     location.reload();
-//     });
-//   function fetchDiscounts() {
-//   const gamesUrl = `https://www.cheapshark.com/api/1.0/deals?storeID=1&onSale=1&pageSize=10`;
-//   const parentContainer = document.getElementById("games-container");
-//   const savedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-//   fetch(gamesUrl)
-//     .then(response => response.json())
-//     .then(data => {
-//       data.slice(0, 10).forEach((game) => {
-//         const gameName = game.title;
-//         const normalPrice = game.normalPrice;
-//         const salePrice = game.salePrice;
-//         const dealRating = game.dealRating;
-//         const id = game.dealID;
-//         const isInWishlist = savedWishlist.includes(game.title);
-//         const gameContainer = document.createElement("div");
-//         gameContainer.classList.add("individual-container");        
-//         gameContainer.innerHTML = `
-//           <h3>${gameName}</h3>
-//           <p>Normal Price: $${normalPrice}</p>
-//           <p>Sale Price: $${salePrice}</p>
-//           <p>Deal Rating: ${dealRating}</p>
-//           <a href="https://www.cheapshark.com/redirect?dealID=${id}" target="_blank">Buy Now</a>
-//           <button class="wishlistBtn">${isInWishlist ? "Added to Wishlist" : "Add to Wishlist"}</button>
-//           <p>-----------------------------</p>
-//         `;
-//         parentContainer.appendChild(gameContainer);
-//         const wishlistBtn = gameContainer.querySelector(".wishlistBtn");
-//         wishlistBtn.addEventListener("click", () => {
-//           if (isInWishlist) {
-//             const gameIndex = savedWishlist.indexOf(gameName);
-//             if (gameIndex > -1) {
-//               savedWishlist.splice(gameIndex, 1);
-//               wishlistBtn.textContent = "Add to Wishlist";
-//             }
-//           } else {
-//             savedWishlist.push(gameName);
-//             wishlistBtn.textContent = "Added to Wishlist";
-//           }
-//           localStorage.setItem("wishlist", JSON.stringify(savedWishlist));
-//         });
-//       });
-//     })
-//     .catch(error => {
-//       console.error('Error:', error);
-//     });
-// }
     </script>
 </body>
 </html>
