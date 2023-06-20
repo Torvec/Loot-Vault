@@ -14,7 +14,7 @@ Visit the GitHub pages link to see website: [Loot Vault](https://torvec.github.i
 
 ## Visuals
 
-COMING SOON!
+![Loot Vault](./assets/images/site_screenshot.png)
 
 ## Usage
 
@@ -23,6 +23,7 @@ This page is used for grading purposes by the UC Berkley coding bootcamp staff.
 ## Credits
 
 - [Logo.com](https://logo.com/)
+- [Haikei](https://app.haikei.app/)
 - [DayJS](https://day.js.org/)
 - [Bulma Framework](https://bulma.io/)
 - [RAWG API](https://rawg.io/apidocs)
@@ -37,10 +38,11 @@ This page is used for grading purposes by the UC Berkley coding bootcamp staff.
 
 ## Features
 
-- Search for discounted games by title, genre, or platform
+- Search for games by title
+- Get the best deals on games
+- View the highest rated games
 - Get an up to date list of free games
 - Save games to your wishlist
-- Add more...
 
 ## Project Status
 
