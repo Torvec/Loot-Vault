@@ -25,13 +25,13 @@ body {
 
 header {
   width: 100%;
-  background-color: #1a1d22;
+  background-color: #1a2027;
   position: fixed;
 }
 
 .logo {
-  width: 34vh;
-  height: 6.5vh;
+  width: 30vh;
+  height: 5.75vh;
 }
 
 .search-bar {
@@ -40,10 +40,11 @@ header {
 }
 
 .search-button {
-  background-color: #454b54;
+  background-color: #ffd262;
   border: #454b54 1px;
-  border-radius: 5px 5px;
-  color: white;
+  border-radius: 7px 7px;
+  color: #17191c;
+  align-content: center;
 }
 
 .search-button:hover {
@@ -64,28 +65,32 @@ main {
   max-width: 1200px;
   margin: 0 auto;
   background-color: #454b54;
-  padding-top: 13vh;
+  padding-top: 13.75vh;
 }
 
-.more-items {
-  border-radius: 5px 5px;
+.more-results {
+  border-radius: 10px 10px;
   color: white;
   background-color: #454b54;
   border: #454b54 solid 1px;
 }
 
-.more-items:hover {
+.more-results:hover {
   background-color: #606875;
   border: #606875 solid 1px;
 }
 
 footer {
   width: 100%;
-  background-color: #191d22;
+  background-color: #1a2027;
 }
 
 .foot-title {
-  color: #134c72;
+  color: #4b545a;
+}
+
+.foot-links {
+  color: #8d95a0;
 }
 
 .bd {
