@@ -25,12 +25,20 @@
         .bg-clr-4 {background: var(--clr-5);}
         .txt-clr-pri {color: var(--clr-4);}
         .txt-clr-sec {color: var(--clr-5);}
+        .page-hero-bg {
+            background-image: url("../assets/images/layered-peaks-haikei.svg");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover
+        }
         body {font-family: var(--ff-main-txt);}
         nav {font-family: var(--ff-hdr-txt);}
+        .logo {max-width: 300px;}
         .navbar-item {color: var(--clr-4);}
         .navbar-menu .navbar-start .navbar-item:hover {background-color: var(--clr-2); color: var(--clr-5);}
         .navbar-brand a:hover {color: var(--clr-5);}
         main {min-height: 100vh;}
+        main a {color: var(--clr-1);}
         main h2 {font-family: var(--ff-hdr-txt);}
         footer section a {color: var(--clr-4);}
         footer section a:hover {color: var(--clr-5);}
@@ -42,7 +50,7 @@
         <!-- Bulma's basic navbar implementation with some customization -->
         <nav class="navbar is-transparent bg-clr-2 p-2" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
-                <a href="index.html"><img src="../assets/images/FInal Logo.png" width="300px"></a>
+                <a href="index.html"><img class="logo" src="../assets/images/logo.png"></a>
                 <!-- Hidden until screen size is small -->
                 <a role="button" class="navbar-burger txt-clr-pri" data-target="navMenu" aria-label="menu" aria-expanded="false">
                     <span aria-hidden="true"></span>
@@ -138,7 +146,7 @@
 
     function createPageTitle(text) {
         let hero = document.createElement("section");
-        hero.setAttribute("class", "hero is-medium bg-clr-1");
+        hero.setAttribute("class", "hero is-medium bg-clr-1 page-hero-bg");
         hero.innerHTML = 
         `
         <div class = "hero-body">
