@@ -3,7 +3,7 @@ A UC Berkley Full Stack Web Development Bootcamp Project 01
 
 ## Description
 
-A website for gamers on a budget!
+A website for gamers on a budget! With a responsive design and easy to use navigation, you can find any game you want at the best prices!
 
 ## GitHub Pages
 
@@ -46,4 +46,4 @@ This page is used for grading purposes by the UC Berkley coding bootcamp staff.
 
 ## Project Status
 
-Work In Progress
+Completed June 2023
