@@ -14,7 +14,7 @@
 .txt-clr-pri {color: var(--clr-4);}
 .txt-clr-sec {color: var(--clr-5);}
 .page-hero-bg {
-  background-image: url("../assets/images/layered-peaks-haikei.svg");
+  background-image: url("../images/layered-peaks-haikei.svg");
   background-position: bottom;
   background-repeat: no-repeat;
   background-size: cover;
