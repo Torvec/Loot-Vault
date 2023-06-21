@@ -27,9 +27,9 @@
         .txt-clr-sec {color: var(--clr-5);}
         .page-hero-bg {
             background-image: url("../assets/images/layered-peaks-haikei.svg");
-            background-position: center;
+            background-position: bottom;
             background-repeat: no-repeat;
-            background-size: cover
+            background-size: cover;
         }
         body {font-family: var(--ff-main-txt);}
         nav {font-family: var(--ff-hdr-txt);}
@@ -142,11 +142,13 @@
         
     const main = document.querySelector("main");
 
+    const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+
     // FUNCTION DECLARATIONS
 
     function createPageTitle(text) {
         let hero = document.createElement("section");
-        hero.setAttribute("class", "hero is-medium bg-clr-1 page-hero-bg");
+        hero.setAttribute("class", "hero is-large bg-clr-1 page-hero-bg");
         hero.innerHTML = 
         `
         <div class = "hero-body">
@@ -186,47 +188,58 @@
                 data.results.forEach((game) => {
                     const gameName = game.name;
                     const metacritic = game.metacritic;
-                    let playtime = game.playtime;
                     let platforms = game.platforms.map((platform) => platform.platform.name).join(", ");
                     if(!metacritic) {
                         metacritic = "N/A";
-                    }
-                    if (playtime === 0) {
-                        playtime = "N/A";
-                    } else {
-                        playtime = `${playtime} hours`;
                     }
                     let screenshots = "";
                         if (game.short_screenshots.length > 0) {
                             screenshots = game.short_screenshots[0].image;
                         }
-                    gameContainer.innerHTML += 
-                    `
-                    <div class="column is-one-third">
-                        <div class="card has-background-grey-lighter">
-                            <header class="card-header">
-                                <h2 class="card-header-title is-size-3">${gameName}</h2>
-                            </header>
-                            <div class="card-image">
-                                <figure class="image">
-                                    <img src="${screenshots}" alt="${gameName} screenshot">
-                                </figure>
-                            </div>
-                            <div class="card-content">
-                                <div class="content">
-                                    <p class="subtitle">Platforms:<br> ${platforms}</p>
+                        const columnElement = document.createElement("div");
+                        columnElement.setAttribute("class", "column is-one-third");
+                        columnElement.innerHTML = `
+                            <div class="card has-background-grey-lighter">
+                                <header class="card-header">
+                                    <h2 class="card-header-title is-size-3">${gameName}</h2>
+                                </header>
+                                <div class="card-image">
+                                    <figure class="image">
+                                        <img src="${screenshots}" alt="${gameName} screenshot">
+                                    </figure>
                                 </div>
-                            </div>
-                            <footer class="card-footer">
-                                <p class="card-footer-item">Metacritic Score: ${metacritic}</p>
-                                <p class="card-footer-item">Playtime: ${playtime}</p>
-                            </footer>
-                            <footer class="card-footer">
-                                <p class="card-footer-item"><button class="wishlist-button button">Add to Wishlist</button></p>
-                            </footer>
-                        </div>
-                    </div>
-                    `;
+                                <div class="card-content">
+                                    <div class="content">
+                                        <p class="subtitle has-text-centered">Metacritic Score<br>${metacritic}</p>
+                                    </div>
+                                </div>
+                                <footer class="card-footer">
+                                    <p class="card-footer-item">Platforms<br>${platforms}</p>
+                                </footer>
+                                <footer class="card-footer">
+                                    <p class="card-footer-item"><button class="wishlist-button button">Add to Wishlist</button></p>
+                                </footer>
+                            </div>`;
+                            const wishlistButton = columnElement.querySelector(".wishlist-button");
+                            const isGameInWishlist = wishlist.some(item => item.gameName === gameName);
+                            if (isGameInWishlist) {
+                                wishlistButton.disabled = true;
+                                wishlistButton.textContent = "Game Added!";
+                            } else {
+                                wishlistButton.addEventListener("click", function () {
+                                    // Save game details to local storage
+                                    const wishlistItem = {
+                                        gameName: gameName,
+                                        screenshots: screenshots,
+                                        metacritic: metacritic
+                                    };
+                                    wishlist.push(wishlistItem);
+                                    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+                                    wishlistButton.disabled = true;
+                                    wishlistButton.textContent = "Game Added!";
+                                });
+                            }
+                    gameContainer.appendChild(columnElement);
                     container.appendChild(gameContainer);
                     main.appendChild(container);
                 });
@@ -248,7 +261,6 @@
                 return response.json();
                 })
             .then((data) => {
-                const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
                 const container = document.createElement("div");
                 container.setAttribute("class", "container is-widescreen p-5");
                 const gameContainer = document.createElement("div");
@@ -259,12 +271,12 @@
                     const normalPrice = game.normalPrice;
                     const salePrice = game.salePrice;
                     const dealRating = game.dealRating;
-                    const metacriticScore = game.metacriticScore;
+                    const metacritic = game.metacriticScore;
                     const id = game.dealID;
-                    gameContainer.innerHTML += 
-                    `
-                    <div class="column is-one-third">
-                        <div class="card has-background-grey-lighter">
+                    const columnElement = document.createElement("div");
+                    columnElement.setAttribute("class", "column is-one-third");
+                    columnElement.innerHTML = `
+                        <div id="${id}" class="card has-background-grey-lighter">
                             <header class="card-header">
                                 <h2 class="card-header-title is-size-3">${gameName}</h2>
                             </header>
@@ -275,8 +287,9 @@
                             </div>
                             <div class="card-content">
                                 <div class="content">
-                                    <p class="subtitle">Metacrictic Score:<br> ${metacriticScore}</p>
+                                    <p class="subtitle has-text-centered">Metacrictic Score<br> ${metacritic}</p>
                                 </div>
+                            </div>
                             <footer class="card-footer">
                                 <p class="card-footer-item">Sale Price:<br> ${salePrice}</p>
                                 <p class="card-footer-item">Normal Price:<br> ${normalPrice}</p>
@@ -286,21 +299,29 @@
                                 <p class="card-footer-item"><button class="button is-warning"><a href="https://www.cheapshark.com/redirect?dealID=${id}" target="_blank">Buy Now</a></button></p>
                                 <p class="card-footer-item"><button class="wishlist-button button">Add to Wishlist</button></p>
                             </footer>
-                        </div>
-                    </div>
-                    `;
+                        </div>`;
+                    const wishlistButton = columnElement.querySelector(".wishlist-button");
+                    const isGameInWishlist = wishlist.some(item => item.gameName === gameName);
+                    if (isGameInWishlist) {
+                        wishlistButton.disabled = true;
+                        wishlistButton.textContent = "Game Added!";
+                    } else {
+                        wishlistButton.addEventListener("click", function () {
+                            // Save game details to local storage
+                            const wishlistItem = {
+                                gameName: gameName,
+                                screenshots: screenshots,
+                                metacritic: metacritic
+                            };
+                            wishlist.push(wishlistItem);
+                            localStorage.setItem("wishlist", JSON.stringify(wishlist));
+                            wishlistButton.disabled = true;
+                            wishlistButton.textContent = "Game Added!";
+                        });
+                    }
+                    gameContainer.appendChild(columnElement);
                     container.appendChild(gameContainer);
                     main.appendChild(container);
-                    const wishlistButton = gameContainer.querySelector('.wishlist-button');
-                    // Check if the game is already in the wishlist
-                    if (wishlist.includes(gameName)) {
-                        wishlistButton.textContent = 'Item Added!';
-                        wishlistButton.disabled = true;
-                    }
-                    // Add the game to the wishlist if it isn't already in it
-                    wishlistButton.addEventListener('click', () => {
-                        addToWishlist(gameName, wishlistButton);
-                    });
                 });
             })
         .catch((error) => {
@@ -328,20 +349,14 @@
                 games.forEach((game) => {
                     const gameName = game.name;
                     const metacritic = game.metacritic;
-                    let playtime = game.playtime;
                     let platforms = game.platforms.map((platform) => platform.platform.name).join(", ");
-                    if (playtime === 0) {
-                        playtime = "N/A";
-                    } else {
-                        playtime = `${playtime} hours`;
-                    }
                     let screenshots = "";
                         if (game.short_screenshots.length > 0) {
                             screenshots = game.short_screenshots[0].image;
                         }
-                    gameContainer.innerHTML += 
-                    `
-                    <div class="column is-one-third">
+                        const columnElement = document.createElement("div");
+                        columnElement.setAttribute("class", "column is-one-third");
+                        columnElement.innerHTML = ` 
                         <div class="card has-background-grey-lighter">
                             <header class="card-header">
                                 <h2 class="card-header-title is-size-3">${gameName}</h2>
@@ -353,19 +368,36 @@
                             </div>
                             <div class="card-content">
                                 <div class="content">
-                                    <p class="subtitle">Platforms:<br> ${platforms}</p>
+                                    <p class="subtitle has-text-centered">Metacritic Score<br>${metacritic}</p>
                                 </div>
                             </div>
                             <footer class="card-footer">
-                                <p class="card-footer-item">Metacritic Score: ${metacritic}</p>
-                                <p class="card-footer-item">Playtime: ${playtime}</p>
+                                <p class="card-footer-item">Platforms<br>${platforms}</p>
                             </footer>
                             <footer class="card-footer">
                                 <p class="card-footer-item"><button class="wishlist-button button">Add to Wishlist</button></p>
                             </footer>
-                        </div>
-                    </div>
-                    `;
+                        </div>`;
+                        const wishlistButton = columnElement.querySelector(".wishlist-button");
+                        const isGameInWishlist = wishlist.some(item => item.gameName === gameName);
+                        if (isGameInWishlist) {
+                            wishlistButton.disabled = true;
+                            wishlistButton.textContent = "Game Added!";
+                        } else {
+                            wishlistButton.addEventListener("click", function () {
+                                // Save game details to local storage
+                                const wishlistItem = {
+                                    gameName: gameName,
+                                    screenshots: screenshots,
+                                    metacritic: metacritic
+                                };
+                                wishlist.push(wishlistItem);
+                                localStorage.setItem("wishlist", JSON.stringify(wishlist));
+                                wishlistButton.disabled = true;
+                                wishlistButton.textContent = "Game Added!";
+                            });
+                        }
+                    gameContainer.appendChild(columnElement);
                     container.appendChild(gameContainer);
                     main.appendChild(container);
                 });
@@ -400,7 +432,7 @@
                 const gameContainer = document.createElement("div");
                 gameContainer.setAttribute("class", "columns is-multiline");
                 for (let i = 0; i < result.length; i++) {
-                    var gameTitle = result[i].title;
+                    var gameName = result[i].title;
                     var screenshots = result[i].thumbnail;
                     var giveawayURL = result[i].open_giveaway_url;
                     var endDate = result[i].end_date;
@@ -416,16 +448,16 @@
                     <div class="column is-one-third">
                         <div class="card has-background-grey-lighter">
                             <header class="card-header">
-                                <h2 class="card-header-title is-size-3">${gameTitle}</h2>
+                                <h2 class="card-header-title is-size-3">${gameName}</h2>
                             </header>
                             <div class="card-image">
                                 <figure class="image">
-                                    <img src="${screenshots}" alt="${gameTitle} screenshot">
+                                    <img src="${screenshots}" alt="${gameName} screenshot">
                                 </figure>
                             </div>
                             <div class="card-content">
                                 <div class="content">
-                                    <p class="subtitle">Platforms: ${platforms}</p>
+                                    <p class="subtitle has-text-centered">Platforms:<br>${platforms}</p>
                                 </div>
                             </div>
                             <footer class="card-footer">
@@ -451,52 +483,65 @@
     // Display's the user's wishlist that is saved in local storage
     function myWishlist() {
         createPageTitle("My Wishlist");
-        var wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
         if (wishlist.length === 0) {
             const gameContainer = document.createElement("div");
             gameContainer.setAttribute("class", "container is-widescreen p-5");
             gameContainer.innerHTML = 
             `
             <h2 class="is-size-3 has-text-weight-bold">Your wishlist is empty</h2>
-            <p>Search for games and add them to your wishlist</p>
+            <p class="is-size-4">Search for games and add them to your wishlist</p>
             `;
             main.appendChild(gameContainer);
         } else {
+            const container = document.createElement("div");
+            container.setAttribute("class", "container is-widescreen p-5");
             const gameContainer = document.createElement("div");
-            gameContainer.setAttribute("class", "container is-widescreen p-5");
+            gameContainer.setAttribute("class", "columns is-multiline");
             for (let i = 0; i < wishlist.length; i++) {
-                gameContainer.innerHTML += 
-                `
-                <h2 class="is-size-3 has-text-weight-bold">${wishlist[i]}</h2>
-                <button class="button is-danger remove-button">Remove</button>
-                `;
-                main.appendChild(gameContainer);
+                const game = wishlist[i];
+                const gameName = game.gameName;
+                const screenshots = game.screenshots;
+                const metacritic = game.metacritic;
+                const columnElement = document.createElement("div");
+                columnElement.setAttribute("class", "column is-one-third");
+                columnElement.innerHTML = `
+                    <div class="card has-background-grey-lighter">
+                        <header class="card-header">
+                            <h2 class="card-header-title is-size-3">${gameName}</h2>
+                        </header>
+                        <div class="card-image">
+                            <figure class="image">
+                                <img src="${screenshots}" alt="${gameName} screenshot">
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                <p class="subtitle has-text-centered">Metacritic Score<br>${metacritic}</p>
+                            </div>
+                        </div>
+                        <footer class="card-footer">
+                            <p class="card-footer-item"><button class="remove-button button is-danger">Remove</button></p>
+                        </footer>
+                    </div>`;
+                gameContainer.appendChild(columnElement);
+                container.appendChild(gameContainer);
+                main.appendChild(container);
+
+                // Add event listener to the "Remove" button
+                const removeButton = columnElement.querySelector(".remove-button");
+                removeButton.addEventListener("click", function() {
+                    // Remove game from wishlist array
+                    wishlist.splice(i, 1);
+                    // Update localStorage
+                    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                    // Remove game card from the page
+                    columnElement.parentElement.remove();
+                    main.innerHTML = "";
+                    myWishlist();
+                });
             }
         }
     };
-
-    // Adds the gameName to the user's wishlist in local storage
-    function addToWishlist(gameName, wishlistButton) {
-        // Retrieve existing wishlist from local storage or create an empty array
-        const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-        // If the gameName is already in the wishlist, disable the button and return
-        if (wishlist.includes(gameName)) {
-            wishlistButton.textContent = "Game Added!";
-            wishlistButton.disabled = true;
-            return;
-        }
-        // Add the gameName to the wishlist
-        wishlist.push(gameName);
-        // Update the wishlist in local storage
-        localStorage.setItem('wishlist', JSON.stringify(wishlist));
-        // Disable the button to prevent the user from adding the same game multiple times
-        wishlistButton.textContent = "Item Added";
-        wishlistButton.disabled = true;
-    }
-
-    function removeFromWishlist() {
-        
-    }
 
 
     // EVENT LISTENERS

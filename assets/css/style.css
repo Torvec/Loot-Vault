@@ -1,102 +1,33 @@
 :root {
-  --priColor: ;
-  --secColor: ;
-  --accColor: ;
+  --clr-1: #1A1D22;
+  --clr-2: #1B273B;
+  --clr-3: #535D6E;
+  --clr-4: #8D9FBA;
+  --clr-5: #FFD262;
+  --ff-main-txt: 'Ubuntu', sans-serif;
+  --ff-hdr-txt: 'Teko', sans-serif;
 }
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Nunito, sans-serif;
+.bg-clr-1 {background: var(--clr-1);}
+.bg-clr-2 {background: var(--clr-2);}
+.bg-clr-3 {background: var(--clr-3);}
+.bg-clr-4 {background: var(--clr-5);}
+.txt-clr-pri {color: var(--clr-4);}
+.txt-clr-sec {color: var(--clr-5);}
+.page-hero-bg {
+  background-image: url("../assets/images/layered-peaks-haikei.svg");
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-
-html {
-  font-size: 62.5%; /* 1rem = 10px */
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: #17191c;
-  color: white;
-  font-size: 1.5rem; /* 15px */
-  font-family: sans-serif;
-}
-
-header {
-  width: 100%;
-  background-color: #1a2027;
-  position: fixed;
-}
-
-.logo {
-  width: 30vh;
-  height: 5.75vh;
-}
-
-.search-bar {
-  border-radius: 5px 5px;
-  border: white;
-}
-
-.search-button {
-  background-color: #ffd262;
-  border: #454b54 1px;
-  border-radius: 7px 7px;
-  color: #17191c;
-  align-content: center;
-}
-
-.search-button:hover {
-  background-color: #606875;
-  border: #606875;
-}
-
-.page-links {
-  color: #8d95a0;
-}
-
-.page-links:hover {
-  color: #606875;
-}
-
-main {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-  background-color: #454b54;
-  padding-top: 13.75vh;
-}
-
-.more-results {
-  border-radius: 10px 10px;
-  color: white;
-  background-color: #454b54;
-  border: #454b54 solid 1px;
-}
-
-.more-results:hover {
-  background-color: #606875;
-  border: #606875 solid 1px;
-}
-
-footer {
-  width: 100%;
-  background-color: #1a2027;
-}
-
-.foot-title {
-  color: #4b545a;
-}
-
-.foot-links {
-  color: #8d95a0;
-}
-
-.bd {
-  border: 1px solid red;
-}
-
-.line {
-  border: #17191c solid 7px;
-}
+body {font-family: var(--ff-main-txt);}
+nav {font-family: var(--ff-hdr-txt);}
+.logo {max-width: 300px;}
+.navbar-item {color: var(--clr-4);}
+.navbar-menu .navbar-start .navbar-item:hover {background-color: var(--clr-2); color: var(--clr-5);}
+.navbar-brand a:hover {color: var(--clr-5);}
+main {min-height: 100vh;}
+main a {color: var(--clr-1);}
+main h2 {font-family: var(--ff-hdr-txt);}
+footer section a {color: var(--clr-4);}
+footer section a:hover {color: var(--clr-5);}
+footer h3 {font-family: var(--ff-hdr-txt);}
