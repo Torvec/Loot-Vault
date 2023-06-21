@@ -1,176 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,500;0,700;1,300;1,500;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
-    />
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <title>Loot Vault</title>
-  </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600&family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Loot Vault - For gamers on a budget!</title>
+</head>
 
-  <body>
+  <body class="bg-clr-1 has-text-grey-lighter">
     <header>
-      <div
-        class="is-flex is-justify-content-space-between is-align-items-center p-4"
-      >
-        <a href="index.html"
-          ><img src="./assets/images/FInal Logo.png" class="logo"
-        /></a>
-        <form id="search-bar">
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="Search for games"
-            class="is-size-3 p-2 search-bar"
-          />
-          <button
-            type="submit"
-            id="search-button"
-            class="is-size-3 p-2 search-button"
-          >
-            Search
-          </button>
-        </form>
-      </div>
-
-      <nav class="container p-3">
-        <ul
-          class="is-flex is-justify-content-center is-justify-content-space-between"
-        >
-          <li>
-            <a id="best-deals" class="is-size-2 page-links">Best Deals</a>
-          </li>
-          <li>
-            <a id="highest-rated" class="is-size-2 page-links">Highest Rated</a>
-          </li>
-          <li><a id="fg-button" class="is-size-2 page-links">Free Games</a></li>
-          <li>
-            <a id="wishlist-button" class="is-size-2 page-links">Wishlist</a>
-          </li>
-        </ul>
-      </nav>
+        <!-- Bulma's basic navbar implementation with some customization -->
+        <nav class="navbar is-transparent bg-clr-2 p-2" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a href="index.html"><img class="logo" src="../assets/images/logo.png"></a>
+                <!-- Hidden until screen size is small -->
+                <a role="button" class="navbar-burger txt-clr-pri" data-target="navMenu" aria-label="menu" aria-expanded="false">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <div class="navbar-menu bg-clr-2" id="navMenu">
+                <div class="navbar-start mx-auto">
+                    <a id="best-deals" class="navbar-item is-size-3 mr-6">Best Deals</a>
+                    <a id="highest-rated" class="navbar-item is-size-3 mr-6">Highest Rated</a>
+                    <a id="free-games" class="navbar-item is-size-3 mr-6">Free Games</a>
+                    <a id="my-wishlist" class="navbar-item is-size-3">My Wishlist</a>
+                </div>
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <form id="search-bar" class="is-flex is-justify-content-space-between">
+                            <input id="search-input" class="input is-normal mr-2" type="text" placeholder="Search For Games" required>
+                            <button id="search-button" class="button bg-clr-4" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </header>
-
-    <main>
-      <!-- container to populate with game results -->
-      <div id="games-container"></div>
+    <main class="bg-clr-3">
+        <!-- DYNAMIC GENERATED CONTENT HERE -->
     </main>
-
-    <div class="p-3 is-flex is-justify-content-center has-text-centered">
-      <button id="more-button" class="is-size-3 p-3 more-results">
-        More Results
-      </button>
-    </div>
-
-    <footer class="p-5">
-      <div class="is-flex is-justify-content-space-evenly">
-        <section>
-          <h3 class="foot-title is-size-2 has-text-weight-bold">Meme Team:</h3>
-          <ul>
-            <li>
-              Avery Myers -
-              <a
-                href="https://github.com/AveryJMyers"
-                class="foot-links"
-                target="_blank"
-                >AveryJMyers</a
-              >
-            </li>
-            <li>
-              Charles Alagos -
-              <a
-                href="https://github.com/Kregkoda"
-                class="foot-links"
-                target="_blank"
-                >Kregkoda</a
-              >
-            </li>
-            <li>
-              Edward Von Schondorf -
-              <a
-                href="https://github.com/Torvec"
-                class="foot-links"
-                target="_blank"
-                >Torvec</a
-              >
-            </li>
-            <li>
-              Jacob Simmons -
-              <a
-                href="https://github.com/Justcallmejayy"
-                class="foot-links"
-                target="_blank"
-                >Justcallmejayy</a
-              >
-            </li>
-            <li>
-              Kevin Gagante -
-              <a
-                href="https://github.com/Gagucci"
-                class="foot-links"
-                target="_blank"
-                >Gagucci</a
-              >
-            </li>
-          </ul>
-        </section>
-        <section>
-          <h3 class="foot-title is-size-2 has-text-weight-bold">Powered by:</h3>
-          <ul>
-            <li>
-              <a
-                href="https://www.gamerpower.com/api-read"
-                class="foot-links"
-                target="_blank"
-                >Gamerpower API</a
-              >
-            </li>
-            <li>
-              <a
-                href="https://apidocs.cheapshark.com/"
-                class="foot-links"
-                target="_blank"
-                >Cheapshark API</a
-              >
-            </li>
-            <li>
-              <a
-                href="https://rawg.io/apidocs"
-                class="foot-links"
-                target="_blank"
-                >RAWG API</a
-              >
-            </li>
-          </ul>
-        </section>
-        <section>
-          <h3 class="foot-title is-size-2 has-text-weight-bold">About</h3>
-          <p>Project 01: Loot Vault</p>
-          <p>A UC Berkley Full Stack Web Development Bootcamp Project</p>
-          <p>Created June 2023</p>
-        </section>
-      </div>
+    <footer class="footer bg-clr-2">
+        <div class="container is-fluid columns">
+            <section class="column">
+                <h3 class="is-size-3 has-text-weight-bold">The Meme Team</h3>
+                <ul>
+                    <li>Avery Myers - <a href="https://github.com/AveryJMyers" target="_blank">AveryJMyers</a></li>
+                    <li>Charles Alagos - <a href="https://github.com/Kregkoda" target="_blank">Kregkoda</a></li>
+                    <li>Edward Von Schondorf - <a href="https://github.com/Torvec" target="_blank">Torvec</a></li>
+                    <li>Jacob Simmons - <a href="https://github.com/Justcallmejayy" target="_blank">Justcallmejayy</a></li>
+                    <li>Kevin Gagante - <a href="https://github.com/Gagucci" target="_blank">Gagucci</a></li>
+                </ul>
+            </section>
+            <section class="column">
+                <h3 class="is-size-3 has-text-weight-bold">Powered By</h3>
+                <ul>
+                    <li><a href="https://rawg.io/apidocs" target="_blank">RAWG Video Games Database API</a></li>
+                    <li><a href="https://www.gamerpower.com/api-read" target="_blank">Gamerpower Free Games API</a></li>
+                    <li><a href="https://apidocs.cheapshark.com/" target="_blank">Cheapshark API</a></li>
+                    <li><a href="https://bulma.io/" target="_blank">Bulma CSS Framework</a></li>
+                </ul>
+            </section>
+            <section class="column">
+                <h3 class="is-size-3 has-text-weight-bold">About</h3>
+                <p>Project 01: Loot Vault</p>
+                <p>A UC Berkley Full Stack Web Development Bootcamp Project</p>
+                <p>Created June 2023</p>
+            </section>
+        </div>
     </footer>
-    <script
-      src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
-      integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
-      crossorigin="anonymous"
-    ></script>
-    <script src="./assets/js/script.js"></script>
-    <!-- <script src="./testing/averytest.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js" integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
+    <script src="./assets/js/script.js">// WHERE THE MAGIC HAPPENS</script>
   </body>
 </html>
