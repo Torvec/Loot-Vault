@@ -7,7 +7,7 @@ A website for gamers on a budget! With a responsive design and easy to use navig
 
 ## GitHub Pages
 
-Visit the GitHub pages link to see website: [Loot Vault](https://torvec.github.io/project_1_Loot_Vault/)
+Visit the GitHub pages link to see website: [Loot Vault](https://torvec.github.io/Loot-Vault/)
 
 ## Project Presentation
 [Canva Presentation](https://www.canva.com/design/DAFlwqLIxJg/6hN9FE7gGSvmlq77uXiANg/view)
