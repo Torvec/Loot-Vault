@@ -28,7 +28,7 @@ This page is used for grading purposes by the UC Berkley coding bootcamp staff.
 - [Bulma Framework](https://bulma.io/)
 - [RAWG API](https://rawg.io/apidocs)
 - [CheapShark API](https://apidocs.cheapshark.com/)
-- [Gamepower Free Games API](https://www.gamepower.com/free-games-api)
+- [Gamepower Free Games API](https://www.gamerpower.com/api-read)
 - The Meme Team
     - Avery Myers [AveryJMyers](https://github.com/AveryJMyers)
     - Charles Alagos [Kregkoda](https://github.com/Kregkoda)
